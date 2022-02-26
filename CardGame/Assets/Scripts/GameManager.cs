@@ -127,7 +127,14 @@ namespace Com.MyCompany.MyGame
                         drawText.SetActive(true);
                         if (Input.GetKeyDown(KeyCode.Space))
                         {
-
+                            if(turn == 1 || turn == 2)
+                            {
+                                DrawCard(playerTurn, true);
+                            }
+                            else
+                            {
+                                DrawCard(playerTurn);
+                            }
                             drawText.SetActive(false);
                             turnP1.SetActive(false);
                             turnP2.SetActive(false);
@@ -227,10 +234,28 @@ namespace Com.MyCompany.MyGame
             ReturnMenu();
         }
 
-        private IEnumerator WaitChangePhase(float time)
+        private bool DrawCard(PlayerStat player,bool isFirstDraw = false)
         {
-            yield return new WaitForSeconds(time);
-            ChangePhase(state);
+            try
+            {
+                if (isFirstDraw)
+                {
+                    for(var i = 0; i < 3; i++)
+                    {
+                        //MODIFY with the monsterManager with the correct ID
+                        var cards = UnityEngine.Random.Range(0, 9);
+                        player.SetCardsInHand(new MonsterManager());
+                    }
+                    return true;
+                }
+                var card = UnityEngine.Random.Range(0, 9);
+                player.SetCardsInHand(new MonsterManager());
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
         }
 
         #region actions
