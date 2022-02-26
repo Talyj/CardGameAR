@@ -41,19 +41,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 453032649546641465}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21a207ecdef52b54e9a152a08144d709, type: 3}
+  m_Script: {fileID: 11500000, guid: a5bdb17173553924e85e71d66cd52c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 9125462169748204021, guid: 83d7e7ffe28d1fc42a63b3b65f3b7aa7,
-    type: 3}
   drawBoard: {fileID: 0}
   mainBoard: {fileID: 0}
   battleBoard: {fileID: 0}
   endBoard: {fileID: 0}
+  turnP1: {fileID: 0}
+  turnP2: {fileID: 0}
+  victoryP1: {fileID: 0}
+  victoryP2: {fileID: 0}
   drawText: {fileID: 0}
   playText: {fileID: 0}
   battleText: {fileID: 0}
   endText: {fileID: 0}
-  victoryP1: {fileID: 0}
-  victoryP2: {fileID: 0}
-  damages: {fileID: 0}
