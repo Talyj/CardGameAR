@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,6 +38,7 @@ namespace Com.MyCompany.MyGame
         private float healTurn;
 
         private bool isPlaying;
+        private bool next;
         //[SerializeField] private GameObject[] boards;
         [SerializeField] private GameObject drawBoard;
         [SerializeField] private GameObject mainBoard;
@@ -55,7 +55,6 @@ namespace Com.MyCompany.MyGame
         [SerializeField] private GameObject battleText;
         [SerializeField] private GameObject endText;
 
-
         private void Start()
         {
             #region game rules
@@ -66,6 +65,7 @@ namespace Com.MyCompany.MyGame
             first = true;
             currentCardNumber = 0;
             oldCardNumber = 0;
+            next = false;
             #endregion
         }
 
@@ -74,7 +74,7 @@ namespace Com.MyCompany.MyGame
             if (isPlaying)
             {
                 MainGame();
-                Debug.Log( "tour numéro : " + turn);
+                Debug.Log("tour numéro : " + turn);
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -114,8 +114,8 @@ namespace Com.MyCompany.MyGame
             {
                 case gameState.drawPhase:
                     {
-                        //setActive text -> Piochez une carte !
-                        if(turn%2 == 0)
+                        ////setActive text -> Piochez une carte !
+                        if (turn % 2 == 0)
                         {
                             turnP2.SetActive(true);
                         }
@@ -123,15 +123,19 @@ namespace Com.MyCompany.MyGame
                         {
                             turnP1.SetActive(true);
                         }
-
-                        drawText.SetActive(true);
-                        if (Input.GetKeyDown(KeyCode.Space))
+                        if (next)
                         {
-
-                            drawText.SetActive(false);
+                            next = false;
+                            if (turn == 1 || turn == 2)
+                            {
+                                DrawCard(playerTurn, true);
+                            }
+                            else
+                            {
+                                DrawCard(playerTurn);
+                            }
                             turnP1.SetActive(false);
                             turnP2.SetActive(false);
-                            ChangePhase(state);
                         }
                         break;
                     }
@@ -150,7 +154,6 @@ namespace Com.MyCompany.MyGame
                             //player1.GetComponent<PlayerManager>().DamagesCalculation(10);
                             //otherPlayer.DamagesCalculation(50);
                             playText.SetActive(false);
-                            ChangePhase(state);
                         }
                         break;
                     }
@@ -162,59 +165,58 @@ namespace Com.MyCompany.MyGame
                         damageTurn = 0;
                         healTurn = 0;
                         battleText.SetActive(true);
-                        if (Input.GetKeyDown(KeyCode.Z))
+                        //if (Input.GetKeyDown(KeyCode.Z))
+                        //{
+                        if (playerTurn.GetCardsOnField() != null)
                         {
-                            if(playerTurn.GetCardsOnField() != null)
+                            foreach (var c in playerTurn.GetCardsOnField())
                             {
-                                foreach(var c in playerTurn.GetCardsOnField())
+                                if (c.CompareTag("DPS") || c.CompareTag("tank"))
                                 {
-                                    if (c.CompareTag("DPS") || c.CompareTag("tank"))
-                                    {
-                                        damageTurn += c.damage;
-                                        c.Attack();
-                                    }
-                                    else if (c.CompareTag("healer"))
-                                    {
-                                        healTurn += c.damage;
-                                        playerTurn.SetHealth(playerTurn.GetHealth() + healTurn);
-                                    }
+                                    damageTurn += c.damage;
+                                    c.Attack();
                                 }
-                                if (otherPlayer.GetCardsOnField() != null)
+                                else if (c.CompareTag("healer"))
                                 {
-                                    foreach(var c in otherPlayer.GetCardsOnField())
+                                    healTurn += c.damage;
+                                    playerTurn.SetHealth(playerTurn.GetHealth() + healTurn); 
+                                }
+                            }
+                            if (otherPlayer.GetCardsOnField() != null)
+                            {
+                                foreach (var c in otherPlayer.GetCardsOnField())
+                                {
+                                    if (c.life + c.shield < damageTurn)
                                     {
-                                        if(c.life + c.shield < damageTurn)
-                                        {
-                                            damageTurn -= c.life;
-                                            CardNumber(false);
-                                            oldCardNumber = currentCardNumber;
-                                            c.Die();
-                                        }
-                                        else
-                                        {
-                                            c.life -= damageTurn;
-                                            c.GetDamage();
-                                        }
+                                        damageTurn -= c.life;
+                                        CardNumber(false);
+                                        oldCardNumber = currentCardNumber;
+                                        c.Die();
+                                    }
+                                    else
+                                    {
+                                        c.life -= damageTurn;
+                                        c.GetDamage();
                                     }
                                 }
-                                else
-                                {
-                                    otherPlayer.SetHealth(otherPlayer.GetHealth() - damageTurn);
-                                }
-                                
+                            }
+                            else
+                            {
+                                otherPlayer.SetHealth(otherPlayer.GetHealth() - damageTurn);
                             }
 
+                            //}
+
                             battleText.SetActive(false);
-                            ChangePhase(state);
                         }
                         break;
                     }
                 case gameState.endphase:
                     {
-                        if (Input.GetKeyDown(KeyCode.E))
-                        {
-                            ChangePhase(state);
-                        }
+                        //if (Input.GetKeyDown(KeyCode.E))
+                        //{
+
+                        //}
                         isEndTurn = false;
                         break;
                     }
@@ -227,10 +229,34 @@ namespace Com.MyCompany.MyGame
             ReturnMenu();
         }
 
-        private IEnumerator WaitChangePhase(float time)
+        public void Next()
         {
-            yield return new WaitForSeconds(time);
-            ChangePhase(state);
+            turnP1.SetActive(false);
+            turnP2.SetActive(false);
+        }
+
+        private bool DrawCard(PlayerStat player, bool isFirstDraw = false)
+        {
+            try
+            {
+                if (isFirstDraw)
+                {
+                    for (var i = 0; i < 3; i++)
+                    {
+                        //MODIFY with the monsterManager with the correct ID
+                        var cards = UnityEngine.Random.Range(0, 9);
+                        player.SetCardsInHand(new MonsterManager());
+                    }
+                    return true;
+                }
+                var card = UnityEngine.Random.Range(0, 9);
+                player.SetCardsInHand(new MonsterManager());
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
         }
 
         #region actions
@@ -272,14 +298,14 @@ namespace Com.MyCompany.MyGame
 
         public void CheckVictory(PlayerStat p1, PlayerStat p2)
         {
-            if(p1.GetHealth() <= 0)
+            if (p1.GetHealth() <= 0)
             {
                 ResetUI();
                 isPlaying = false;
                 victoryP1.SetActive(true);
                 StartCoroutine(DoAfter(3));
             }
-            if(p2.GetHealth() <= 0)
+            if (p2.GetHealth() <= 0)
             {
                 ResetUI();
                 isPlaying = false;
@@ -298,7 +324,7 @@ namespace Com.MyCompany.MyGame
             {
                 currentCardNumber = oldCardNumber - 1;
             }
-        }        
+        }
 
         private IEnumerator ChangeBoard(GameObject boardToDisplay, GameObject boardToHide1, GameObject boardToHide2, GameObject boardToHide3)
         {
@@ -308,14 +334,17 @@ namespace Com.MyCompany.MyGame
             boardToDisplay.SetActive(true);
             yield return new WaitForSeconds(timeBetweenBoards);
             boardToDisplay.SetActive(false);
+            turnP1.SetActive(false);
+            turnP2.SetActive(false);
         }
 
-        private void ChangePhase(gameState gameStatus)
+        public void ChangePhase()
         {
-            switch (gameStatus)
+            ResetUI();
+            switch (state)
             {
                 case gameState.drawPhase:
-                    {
+                    {                        
                         state = gameState.mainPhase;
                         StartCoroutine(ChangeBoard(mainBoard, endBoard, drawBoard, battleBoard));
                         break;
@@ -337,6 +366,14 @@ namespace Com.MyCompany.MyGame
                         state = gameState.drawPhase;
                         StartCoroutine(ChangeBoard(drawBoard, endBoard, mainBoard, battleBoard));
                         turn++;
+                        if (turn % 2 == 0)
+                        {
+                            turnP2.SetActive(true);
+                        }
+                        else
+                        {
+                            turnP1.SetActive(true);
+                        }
                         break;
                     }
 
