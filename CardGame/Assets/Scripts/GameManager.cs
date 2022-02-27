@@ -16,19 +16,15 @@ namespace Com.MyCompany.MyGame
             mainPhase = 1,
             //Here is when we order attacks
             battlePhase = 2,
-            endphase = 3
         };
 
         private float timeBetweenBoards = 2;
 
         private int turn;
         private gameState state;
-        private bool isEndTurn;
         private PlayerStat player1;
         private PlayerStat player2;
 
-        private float health1;
-        private float health2;
         private bool first;
 
         private int currentCardNumber;
@@ -38,12 +34,11 @@ namespace Com.MyCompany.MyGame
         private float healTurn;
 
         private bool isPlaying;
-        private bool next;
+        private bool isTargetFound;
         //[SerializeField] private GameObject[] boards;
         [SerializeField] private GameObject drawBoard;
         [SerializeField] private GameObject mainBoard;
         [SerializeField] private GameObject battleBoard;
-        [SerializeField] private GameObject endBoard;
         [SerializeField] private GameObject turnP1;
         [SerializeField] private GameObject turnP2;
         [SerializeField] private GameObject victoryP1;
@@ -53,7 +48,6 @@ namespace Com.MyCompany.MyGame
         [SerializeField] private GameObject drawText;
         [SerializeField] private GameObject playText;
         [SerializeField] private GameObject battleText;
-        [SerializeField] private GameObject endText;
 
         private void Start()
         {
@@ -61,11 +55,10 @@ namespace Com.MyCompany.MyGame
             turn = 1;
             isPlaying = true;
             state = gameState.drawPhase;
-            isEndTurn = true;
             first = true;
             currentCardNumber = 0;
             oldCardNumber = 0;
-            next = false;
+            isTargetFound = false;
             #endregion
         }
 
@@ -151,9 +144,9 @@ namespace Com.MyCompany.MyGame
                         //}
                         //Jsais pas pourquoi ça marche mais ça marche du coup
                         //il faut remplacer ça par un fonction qui détecte une nouvelle imagetarget mais je sais pas laquelle
-                        if (currentCardNumber != oldCardNumber)
+                        if (isTargetFound)
                         {
-                            oldCardNumber = currentCardNumber;
+                            isTargetFound = false;
                             //TODO Ajouter l'image target detection, ajoute la carte détectée dans la liste
                             //Remplacer new Mobs avec le monstre détecté lors du spawn
                             playerTurn.SetCardsOnField(new Mobs());
@@ -165,6 +158,7 @@ namespace Com.MyCompany.MyGame
                             //    playerTurn.SetHealth(playerTurn.GetHealth + c.damage);
                             //    c.isUsed = true
                             //}
+                            ChangePhase();
                             playText.SetActive(false);
                         }
                         break;
@@ -177,6 +171,10 @@ namespace Com.MyCompany.MyGame
                         healTurn = 0;
                         battleText.SetActive(true);
 
+                        if(turn == 1)
+                        {
+                            ChangePhase();
+                        }
                         //TODO c'est juste un test de victory condition qui pourra être effacé plus tard
                         #region test
                         if (Input.GetKeyDown(KeyCode.A))
@@ -234,18 +232,12 @@ namespace Com.MyCompany.MyGame
                         }
                         break;
                     }
-                case gameState.endphase:
-                    {
-                        //Jsais plus à quoi sert cette phase mais nsm on la garde
-                        break;
-                    }
             }
         }
 
-        private IEnumerator DoAfter(float time)
+        public void TargetFound()
         {
-            yield return new WaitForSeconds(time);
-            ReturnMenu();
+            isTargetFound = true;
         }
 
         private bool DrawCard(PlayerStat player, bool isFirstDraw = false)
@@ -277,14 +269,14 @@ namespace Com.MyCompany.MyGame
             drawBoard.SetActive(false);
             mainBoard.SetActive(false);
             battleBoard.SetActive(false);
-            endBoard.SetActive(false);
+            //endBoard.SetActive(false);
             turnP1.SetActive(false);
             turnP2.SetActive(false);
 
             drawText.SetActive(false);
             playText.SetActive(false);
             battleText.SetActive(false);
-            endText.SetActive(false);
+            //endText.SetActive(false);
         }
 
         public void CheckVictory(PlayerStat p1, PlayerStat p2)
@@ -294,14 +286,14 @@ namespace Com.MyCompany.MyGame
                 ResetUI();
                 isPlaying = false;
                 victoryP2.SetActive(true);
-                StartCoroutine(DoAfter(3));
+                //StartCoroutine(DoAfter(3));
             }
             if (p2.GetHealth() <= 0)
             {
                 ResetUI();
                 isPlaying = false;
                 victoryP1.SetActive(true);
-                StartCoroutine(DoAfter(3));
+                //StartCoroutine(DoAfter(3));
             }
         }
 
@@ -317,11 +309,10 @@ namespace Com.MyCompany.MyGame
             }
         }
 
-        private IEnumerator ChangeBoard(GameObject boardToDisplay, GameObject boardToHide1, GameObject boardToHide2, GameObject boardToHide3)
+        private IEnumerator ChangeBoard(GameObject boardToDisplay, GameObject boardToHide1, GameObject boardToHide2)
         {
             boardToHide1.SetActive(false);
             boardToHide2.SetActive(false);
-            boardToHide3.SetActive(false);
             boardToDisplay.SetActive(true);
             yield return new WaitForSeconds(timeBetweenBoards);
             boardToDisplay.SetActive(false);
@@ -337,25 +328,19 @@ namespace Com.MyCompany.MyGame
                 case gameState.drawPhase:
                     {                        
                         state = gameState.mainPhase;
-                        StartCoroutine(ChangeBoard(mainBoard, endBoard, drawBoard, battleBoard));
+                        StartCoroutine(ChangeBoard(mainBoard, drawBoard, battleBoard));
                         break;
                     }
                 case gameState.mainPhase:
                     {
                         state = gameState.battlePhase;
-                        StartCoroutine(ChangeBoard(battleBoard, endBoard, drawBoard, mainBoard));
+                        StartCoroutine(ChangeBoard(battleBoard, drawBoard, mainBoard));
                         break;
                     }
                 case gameState.battlePhase:
                     {
-                        state = gameState.endphase;
-                        StartCoroutine(ChangeBoard(endBoard, mainBoard, drawBoard, battleBoard));
-                        break;
-                    }
-                case gameState.endphase:
-                    {
                         state = gameState.drawPhase;
-                        StartCoroutine(ChangeBoard(drawBoard, endBoard, mainBoard, battleBoard));
+                        StartCoroutine(ChangeBoard(drawBoard, mainBoard, battleBoard));
                         turn++;
                         if (turn % 2 == 0)
                         {
@@ -367,7 +352,6 @@ namespace Com.MyCompany.MyGame
                         }
                         break;
                     }
-
             }
         }
 
