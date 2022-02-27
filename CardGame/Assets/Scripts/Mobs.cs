@@ -12,6 +12,7 @@ public class Mobs : MonoBehaviour
     public bool hasShield;
     public Animator anim;
     public bool isUsed;
+    public GameObject particles;
 
     public void Start()
     {
@@ -47,8 +48,18 @@ public class Mobs : MonoBehaviour
         }
     }
 
-    //public pour test a modifier plus tard
+    void Awake() {
+        this.gameObject.SetActive(false);
+        OnSpawn();
+    }
+
     public void OnSpawn() {
+        particles.SetActive(true);
+        Invoke("SpawnMe", 2.0f);
+    }
+
+    private void SpawnMe() {
+        this.gameObject.SetActive(true);
         anim.SetBool("Spawn", true);
         Invoke("Reset", 0.2f);
     }
