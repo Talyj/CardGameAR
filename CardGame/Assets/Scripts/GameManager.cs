@@ -161,6 +161,7 @@ namespace Com.MyCompany.MyGame
                             //    playerTurn.SetHealth(playerTurn.GetHealth + c.damage);
                             //    c.isUsed = true
                             //}
+                            ChangePhase();
                             playText.SetActive(false);
                         }
                         break;
