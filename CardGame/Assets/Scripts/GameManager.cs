@@ -112,6 +112,9 @@ namespace Com.MyCompany.MyGame
             //If otherPlayer block the commands 
             switch (state)
             {
+                //TODO Pour la partie ou tu tire une carte du deck, au lieu de le faire dans le jeu 
+                //je pensais le faire dans la vraie vie en mode on a notre deck à côté de nous et on pioche dedans directement
+                //Si ça te convient alors efface la region "DRAW"
                 case gameState.drawPhase:
                     {
                         ////setActive text -> Piochez une carte !
@@ -123,36 +126,45 @@ namespace Com.MyCompany.MyGame
                         {
                             turnP1.SetActive(true);
                         }
-                        if (next)
+                        #region DRAW
+                        if (turn == 1 || turn == 2)
                         {
-                            next = false;
-                            if (turn == 1 || turn == 2)
-                            {
-                                DrawCard(playerTurn, true);
-                            }
-                            else
-                            {
-                                DrawCard(playerTurn);
-                            }
-                            turnP1.SetActive(false);
-                            turnP2.SetActive(false);
+                            DrawCard(playerTurn, true);
                         }
+                        else
+                        {
+                            DrawCard(playerTurn);
+                        }
+                        #endregion
+                        
                         break;
                     }
                 case gameState.mainPhase:
                     {
                         playText.SetActive(true);
-                        if (Input.GetKeyDown(KeyCode.A))
-                        {
-                            CardNumber(true);
+                        //TODO la partie commenté juste en dessous permet de tester sans carte PARCE QUE J'AVAIS PAS DE PTN DE CARTE POUR TESTER
+                        //Donc oue c'est un truc que tu peux supprimer quand t'auras des cartes
+                        //if (Input.GetKeyDown(KeyCode.A))
+                        //{
+                        //    CardNumber(true);
 
-                        }
+                        //}
+                        //Jsais pas pourquoi ça marche mais ça marche du coup
+                        //il faut remplacer ça par un fonction qui détecte une nouvelle imagetarget mais je sais pas laquelle
                         if (currentCardNumber != oldCardNumber)
                         {
-                            //Have to add the card to the player playing hands
                             oldCardNumber = currentCardNumber;
-                            //player1.GetComponent<PlayerManager>().DamagesCalculation(10);
-                            //otherPlayer.DamagesCalculation(50);
+                            //TODO Ajouter l'image target detection, ajoute la carte détectée dans la liste
+                            //Remplacer new Mobs avec le monstre détecté lors du spawn
+                            playerTurn.SetCardsOnField(new Mobs());
+
+                            //Dans le cas ou Tajma spawn il soigne
+                            //TODO Ici on echange le "c" avec l'objet qu'on récupère lorsqu'on détecte le monstre
+                            //if (c.CompareTag("tajma") && !c.isUsed)
+                            //{
+                            //    playerTurn.SetHealth(playerTurn.GetHealth + c.damage);
+                            //    c.isUsed = true
+                            //}
                             playText.SetActive(false);
                         }
                         break;
@@ -161,32 +173,45 @@ namespace Com.MyCompany.MyGame
                     {
                         //Need image target to determine what is being played
                         //Loop trought the list cardsOnField to get damage/effects ...
-                        //Let player choose what is the target and caculate damages
                         damageTurn = 0;
                         healTurn = 0;
                         battleText.SetActive(true);
-                        //if (Input.GetKeyDown(KeyCode.Z))
-                        //{
+
+                        //TODO c'est juste un test de victory condition qui pourra être effacé plus tard
+                        #region test
+                        if (Input.GetKeyDown(KeyCode.A))
+                        {
+                            otherPlayer.SetHealth(0);
+                        }
+                        #endregion
                         if (playerTurn.GetCardsOnField() != null)
                         {
                             foreach (var c in playerTurn.GetCardsOnField())
                             {
-                                if (c.CompareTag("DPS") || c.CompareTag("tank"))
+                                if (c.CompareTag("DPS"))
                                 {
                                     damageTurn += c.damage;
                                     c.Attack();
                                 }
-                                else if (c.CompareTag("healer"))
+                                else if (c.CompareTag("ymir"))
                                 {
                                     healTurn += c.damage;
+                                    c.Heal();
                                     playerTurn.SetHealth(playerTurn.GetHealth() + healTurn); 
+                                }
+                                else if (c.CompareTag("ekey"))
+                                {
+                                    foreach(var ca in playerTurn.GetCardsOnField())
+                                    {
+                                        ca.life += c.damage;
+                                    }
                                 }
                             }
                             if (otherPlayer.GetCardsOnField() != null)
                             {
                                 foreach (var c in otherPlayer.GetCardsOnField())
                                 {
-                                    if (c.life + c.shield < damageTurn)
+                                    if (c.life < damageTurn)
                                     {
                                         damageTurn -= c.life;
                                         CardNumber(false);
@@ -205,19 +230,13 @@ namespace Com.MyCompany.MyGame
                                 otherPlayer.SetHealth(otherPlayer.GetHealth() - damageTurn);
                             }
 
-                            //}
-
                             battleText.SetActive(false);
                         }
                         break;
                     }
                 case gameState.endphase:
                     {
-                        //if (Input.GetKeyDown(KeyCode.E))
-                        //{
-
-                        //}
-                        isEndTurn = false;
+                        //Jsais plus à quoi sert cette phase mais nsm on la garde
                         break;
                     }
             }
@@ -229,12 +248,6 @@ namespace Com.MyCompany.MyGame
             ReturnMenu();
         }
 
-        public void Next()
-        {
-            turnP1.SetActive(false);
-            turnP2.SetActive(false);
-        }
-
         private bool DrawCard(PlayerStat player, bool isFirstDraw = false)
         {
             try
@@ -243,14 +256,14 @@ namespace Com.MyCompany.MyGame
                 {
                     for (var i = 0; i < 3; i++)
                     {
-                        //MODIFY with the monsterManager with the correct ID
+                        //MODIFY with the Mobs with the correct ID
                         var cards = UnityEngine.Random.Range(0, 9);
-                        player.SetCardsInHand(new MonsterManager());
+                        player.SetCardsInHand(new Mobs());
                     }
                     return true;
                 }
                 var card = UnityEngine.Random.Range(0, 9);
-                player.SetCardsInHand(new MonsterManager());
+                player.SetCardsInHand(new Mobs());
             }
             catch (Exception e)
             {
@@ -258,28 +271,6 @@ namespace Com.MyCompany.MyGame
             }
             return true;
         }
-
-        #region actions
-        private void Draw()
-        {
-            //TODO
-        }
-
-        private void MainPhase()
-        {
-            //TODO
-        }
-
-        private void BattlePhase()
-        {
-            //TODO
-        }
-
-        private void EndPhase()
-        {
-            //TODO
-        }
-        #endregion
 
         private void ResetUI()
         {
@@ -302,14 +293,14 @@ namespace Com.MyCompany.MyGame
             {
                 ResetUI();
                 isPlaying = false;
-                victoryP1.SetActive(true);
+                victoryP2.SetActive(true);
                 StartCoroutine(DoAfter(3));
             }
             if (p2.GetHealth() <= 0)
             {
                 ResetUI();
                 isPlaying = false;
-                victoryP2.SetActive(true);
+                victoryP1.SetActive(true);
                 StartCoroutine(DoAfter(3));
             }
         }

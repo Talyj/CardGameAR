@@ -11,6 +11,12 @@ public class Mobs : MonoBehaviour
     public string type;
     public bool hasShield;
     public Animator anim;
+    public bool isUsed;
+
+    public void Start()
+    {
+        isUsed = false;
+    }
 
     void Update() {
         //Pour les test d'animations, à retirer
@@ -21,7 +27,7 @@ public class Mobs : MonoBehaviour
             Die();
         }
         if(Input.GetKeyDown("p")) {
-            GetDamage(0);
+            GetDamage();
         }
         if(Input.GetKeyDown("a")) {
             Attack();
@@ -64,17 +70,17 @@ public class Mobs : MonoBehaviour
         Invoke("Reset", 0.2f);
     }
  
-    public void GetDamage(float m) {
-        if(hasShield == true) {
-            //a check si ca bug ici
-            while(m > 0 || shield > 0) {
-                shield--;
-                m--;
-            }
-            life -= m;
-        } else {
-            life -= m; 
-        }
+    public void GetDamage(/*float m*/) {
+        //if(hasShield == true) {
+        //    //a check si ca bug ici
+        //    while(m > 0 || shield > 0) {
+        //        shield--;
+        //        m--;
+        //    }
+        //    life -= m;
+        //} else {
+        //    life -= m; 
+        //}
         anim.SetBool("GetDamage", true);
         Invoke("Reset", 0.2f);
     }

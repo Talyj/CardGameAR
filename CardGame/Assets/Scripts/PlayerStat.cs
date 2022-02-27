@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerStat
 {
     private float _health;
-    private List<MonsterManager> _cardsOnField;
-    private List<MonsterManager> _cardsInHand;
+    private List<Mobs> _cardsOnField;
+    private List<Mobs> _cardsInHand;
 
     public PlayerStat(float health)
     {
@@ -24,12 +24,12 @@ public class PlayerStat
         _health = health;
     }
 
-    public List<MonsterManager> GetCardsOnField()
+    public List<Mobs> GetCardsOnField()
     {
         return _cardsOnField;
     }
 
-    public int SetCardsOnField(MonsterManager monster)
+    public int SetCardsOnField(Mobs monster)
     {
         if(_cardsOnField.Count > 3)
         {
@@ -41,12 +41,12 @@ public class PlayerStat
         return 1;
     }
 
-    public List<MonsterManager> GetCardsInHand()
+    public List<Mobs> GetCardsInHand()
     {
         return _cardsInHand;
     }
 
-    public void SetCardsInHand(MonsterManager monster)
+    public void SetCardsInHand(Mobs monster)
     {
         _cardsInHand.Add(monster);
     }
