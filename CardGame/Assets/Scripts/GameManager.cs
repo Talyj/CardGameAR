@@ -16,7 +16,6 @@ namespace Com.MyCompany.MyGame
             mainPhase = 1,
             //Here is when we order attacks
             battlePhase = 2,
-            endphase = 3
         };
 
         private float timeBetweenBoards = 2;
@@ -40,7 +39,6 @@ namespace Com.MyCompany.MyGame
         [SerializeField] private GameObject drawBoard;
         [SerializeField] private GameObject mainBoard;
         [SerializeField] private GameObject battleBoard;
-        [SerializeField] private GameObject endBoard;
         [SerializeField] private GameObject turnP1;
         [SerializeField] private GameObject turnP2;
         [SerializeField] private GameObject victoryP1;
@@ -50,7 +48,6 @@ namespace Com.MyCompany.MyGame
         [SerializeField] private GameObject drawText;
         [SerializeField] private GameObject playText;
         [SerializeField] private GameObject battleText;
-        [SerializeField] private GameObject endText;
 
         private void Start()
         {
@@ -174,6 +171,10 @@ namespace Com.MyCompany.MyGame
                         healTurn = 0;
                         battleText.SetActive(true);
 
+                        if(turn == 1)
+                        {
+                            ChangePhase();
+                        }
                         //TODO c'est juste un test de victory condition qui pourra être effacé plus tard
                         #region test
                         if (Input.GetKeyDown(KeyCode.A))
@@ -231,11 +232,6 @@ namespace Com.MyCompany.MyGame
                         }
                         break;
                     }
-                case gameState.endphase:
-                    {
-                        //Jsais plus à quoi sert cette phase mais nsm on la garde
-                        break;
-                    }
             }
         }
 
@@ -273,14 +269,14 @@ namespace Com.MyCompany.MyGame
             drawBoard.SetActive(false);
             mainBoard.SetActive(false);
             battleBoard.SetActive(false);
-            endBoard.SetActive(false);
+            //endBoard.SetActive(false);
             turnP1.SetActive(false);
             turnP2.SetActive(false);
 
             drawText.SetActive(false);
             playText.SetActive(false);
             battleText.SetActive(false);
-            endText.SetActive(false);
+            //endText.SetActive(false);
         }
 
         public void CheckVictory(PlayerStat p1, PlayerStat p2)
@@ -313,11 +309,10 @@ namespace Com.MyCompany.MyGame
             }
         }
 
-        private IEnumerator ChangeBoard(GameObject boardToDisplay, GameObject boardToHide1, GameObject boardToHide2, GameObject boardToHide3)
+        private IEnumerator ChangeBoard(GameObject boardToDisplay, GameObject boardToHide1, GameObject boardToHide2)
         {
             boardToHide1.SetActive(false);
             boardToHide2.SetActive(false);
-            boardToHide3.SetActive(false);
             boardToDisplay.SetActive(true);
             yield return new WaitForSeconds(timeBetweenBoards);
             boardToDisplay.SetActive(false);
@@ -333,25 +328,19 @@ namespace Com.MyCompany.MyGame
                 case gameState.drawPhase:
                     {                        
                         state = gameState.mainPhase;
-                        StartCoroutine(ChangeBoard(mainBoard, endBoard, drawBoard, battleBoard));
+                        StartCoroutine(ChangeBoard(mainBoard, drawBoard, battleBoard));
                         break;
                     }
                 case gameState.mainPhase:
                     {
                         state = gameState.battlePhase;
-                        StartCoroutine(ChangeBoard(battleBoard, endBoard, drawBoard, mainBoard));
+                        StartCoroutine(ChangeBoard(battleBoard, drawBoard, mainBoard));
                         break;
                     }
                 case gameState.battlePhase:
                     {
-                        state = gameState.endphase;
-                        StartCoroutine(ChangeBoard(endBoard, mainBoard, drawBoard, battleBoard));
-                        break;
-                    }
-                case gameState.endphase:
-                    {
                         state = gameState.drawPhase;
-                        StartCoroutine(ChangeBoard(drawBoard, endBoard, mainBoard, battleBoard));
+                        StartCoroutine(ChangeBoard(drawBoard, mainBoard, battleBoard));
                         turn++;
                         if (turn % 2 == 0)
                         {
@@ -363,7 +352,6 @@ namespace Com.MyCompany.MyGame
                         }
                         break;
                     }
-
             }
         }
 
