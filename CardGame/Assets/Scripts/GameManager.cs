@@ -87,8 +87,8 @@ namespace Com.MyCompany.MyGame
         {
             if (first)
             {
-                player1 = new PlayerStat(100);
-                player2 = new PlayerStat(100);
+                player1 = new PlayerStat(10);
+                player2 = new PlayerStat(10);
                 first = false;
             }
             if (SceneManager.GetActiveScene().name == "Game")
@@ -242,11 +242,11 @@ namespace Com.MyCompany.MyGame
             }
         }
 
-        private IEnumerator DoAfter(float time)
-        {
-            yield return new WaitForSeconds(time);
-            ReturnMenu();
-        }
+        //private IEnumerator DoAfter(float time)
+        //{
+        //    yield return new WaitForSeconds(time);
+        //    ReturnMenu();
+        //}
 
         private bool DrawCard(PlayerStat player, bool isFirstDraw = false)
         {
@@ -294,14 +294,14 @@ namespace Com.MyCompany.MyGame
                 ResetUI();
                 isPlaying = false;
                 victoryP2.SetActive(true);
-                StartCoroutine(DoAfter(3));
+                //StartCoroutine(DoAfter(3));
             }
             if (p2.GetHealth() <= 0)
             {
                 ResetUI();
                 isPlaying = false;
                 victoryP1.SetActive(true);
-                StartCoroutine(DoAfter(3));
+                //StartCoroutine(DoAfter(3));
             }
         }
 
