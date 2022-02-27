@@ -23,12 +23,9 @@ namespace Com.MyCompany.MyGame
 
         private int turn;
         private gameState state;
-        private bool isEndTurn;
         private PlayerStat player1;
         private PlayerStat player2;
 
-        private float health1;
-        private float health2;
         private bool first;
 
         private int currentCardNumber;
@@ -38,7 +35,7 @@ namespace Com.MyCompany.MyGame
         private float healTurn;
 
         private bool isPlaying;
-        private bool next;
+        private bool isTargetFound;
         //[SerializeField] private GameObject[] boards;
         [SerializeField] private GameObject drawBoard;
         [SerializeField] private GameObject mainBoard;
@@ -61,11 +58,10 @@ namespace Com.MyCompany.MyGame
             turn = 1;
             isPlaying = true;
             state = gameState.drawPhase;
-            isEndTurn = true;
             first = true;
             currentCardNumber = 0;
             oldCardNumber = 0;
-            next = false;
+            isTargetFound = false;
             #endregion
         }
 
@@ -87,8 +83,8 @@ namespace Com.MyCompany.MyGame
         {
             if (first)
             {
-                player1 = new PlayerStat(10);
-                player2 = new PlayerStat(10);
+                player1 = new PlayerStat(100);
+                player2 = new PlayerStat(100);
                 first = false;
             }
             if (SceneManager.GetActiveScene().name == "Game")
@@ -151,9 +147,9 @@ namespace Com.MyCompany.MyGame
                         //}
                         //Jsais pas pourquoi ça marche mais ça marche du coup
                         //il faut remplacer ça par un fonction qui détecte une nouvelle imagetarget mais je sais pas laquelle
-                        if (currentCardNumber != oldCardNumber)
+                        if (isTargetFound)
                         {
-                            oldCardNumber = currentCardNumber;
+                            isTargetFound = false;
                             //TODO Ajouter l'image target detection, ajoute la carte détectée dans la liste
                             //Remplacer new Mobs avec le monstre détecté lors du spawn
                             playerTurn.SetCardsOnField(new Mobs());
@@ -242,11 +238,10 @@ namespace Com.MyCompany.MyGame
             }
         }
 
-        //private IEnumerator DoAfter(float time)
-        //{
-        //    yield return new WaitForSeconds(time);
-        //    ReturnMenu();
-        //}
+        public void TargetFound()
+        {
+            isTargetFound = true;
+        }
 
         private bool DrawCard(PlayerStat player, bool isFirstDraw = false)
         {
