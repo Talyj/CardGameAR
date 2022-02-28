@@ -44,8 +44,6 @@ namespace Com.MyCompany.MyGame
         [SerializeField] private GameObject battleBoard;
         [SerializeField] private GameObject turnP1;
         [SerializeField] private GameObject turnP2;
-        [SerializeField] private GameObject victoryP1;
-        [SerializeField] private GameObject victoryP2;
 
         //[SerializeField] private GameObject[] texts;
         [SerializeField] private GameObject drawText;
@@ -83,68 +81,72 @@ namespace Com.MyCompany.MyGame
         void Update()
         {
             turnNumber.text = turn.ToString();
-            vieJoueur1Vue1.text = player1.GetHealth().ToString() + "/100";
-            vieJoueur2Vue1.text = player2.GetHealth().ToString() + "/100";
-            vieJoueur1Vue2.text = player1.GetHealth().ToString() + "/100";
-            vieJoueur2Vue2.text = player2.GetHealth().ToString() + "/100";
-            if (player1.GetHealth() <= 0)
-            {
-                victoryPanelP2.SetActive(true);
-            }
 
-            if (player2.GetHealth() <= 0)
-            {
-                victoryPanelP1.SetActive(true);
-            }
+            if(player1 != null && player2 != null) {
+                vieJoueur1Vue1.text = player1.GetHealth().ToString() + "/100";
+                vieJoueur2Vue1.text = player2.GetHealth().ToString() + "/100";
+                vieJoueur1Vue2.text = player1.GetHealth().ToString() + "/100";
+                vieJoueur2Vue2.text = player2.GetHealth().ToString() + "/100";
 
-            for (int i = 100; i > 0; i = i - 10)
-            {
-                if (player1.GetHealth() < i && player1.GetHealth() >= (i - 10))
+                if (player1.GetHealth() <= 0)
                 {
-                    for (int j = (i / 10) - 1; j < 10; j++)
+                    victoryPanelP2.SetActive(true);
+                }
+
+                if (player2.GetHealth() <= 0)
+                {
+                    victoryPanelP1.SetActive(true);
+                }
+
+                for (int i = 100; i > 0; i = i - 10)
+                {
+                    if (player1.GetHealth() < i && player1.GetHealth() >= (i - 10))
                     {
-                        lifePlayer1Vue1[j].SetActive(false);
-                        lifePlayer1Vue2[j].SetActive(false);
-                    }
-                    lifePlayer1Vue1[(i / 10) - 1].SetActive(true);
-                    lifePlayer1Vue2[(i / 10) - 1].SetActive(true);
-                    for (int j = (i / 10) - 1; j > 0; j--)
-                    {
-                        lifePlayer1Vue1[j - 1].SetActive(true);
-                        lifePlayer1Vue2[j - 1].SetActive(true);
+                        for (int j = (i / 10) - 1; j < 10; j++)
+                        {
+                            lifePlayer1Vue1[j].SetActive(false);
+                            lifePlayer1Vue2[j].SetActive(false);
+                        }
+                        lifePlayer1Vue1[(i / 10) - 1].SetActive(true);
+                        lifePlayer1Vue2[(i / 10) - 1].SetActive(true);
+                        for (int j = (i / 10) - 1; j > 0; j--)
+                        {
+                            lifePlayer1Vue1[j - 1].SetActive(true);
+                            lifePlayer1Vue2[j - 1].SetActive(true);
+                        }
                     }
                 }
-            }
 
-            for (int i = 100; i > 0; i = i - 10)
-            {
-                if (player2.GetHealth() < i && player2.GetHealth() >= (i - 10))
+                for (int i = 100; i > 0; i = i - 10)
                 {
-                    for (int j = (i / 10) - 1; j < 10; j++)
+                    if (player2.GetHealth() < i && player2.GetHealth() >= (i - 10))
                     {
-                        lifePlayer2Vue1[j].SetActive(false);
-                        lifePlayer2Vue2[j].SetActive(false);
-                    }
-                    lifePlayer2Vue1[(i / 10) - 1].SetActive(true);
-                    lifePlayer2Vue2[(i / 10) - 1].SetActive(true);
-                    for (int j = (i / 10) - 1; j > 0; j--)
-                    {
-                        lifePlayer2Vue1[j - 1].SetActive(true);
-                        lifePlayer2Vue2[j - 1].SetActive(true);
+                        for (int j = (i / 10) - 1; j < 10; j++)
+                        {
+                            lifePlayer2Vue1[j].SetActive(false);
+                            lifePlayer2Vue2[j].SetActive(false);
+                        }
+                        lifePlayer2Vue1[(i / 10) - 1].SetActive(true);
+                        lifePlayer2Vue2[(i / 10) - 1].SetActive(true);
+                        for (int j = (i / 10) - 1; j > 0; j--)
+                        {
+                            lifePlayer2Vue1[j - 1].SetActive(true);
+                            lifePlayer2Vue2[j - 1].SetActive(true);
+                        }
                     }
                 }
-            }
 
-            if (player1.GetHealth() >= 100)
-            {
-                lifePlayer1Vue1[9].SetActive(true);
-                lifePlayer1Vue2[9].SetActive(true);
-            }
+                if (player1.GetHealth() >= 100)
+                {
+                    lifePlayer1Vue1[9].SetActive(true);
+                    lifePlayer1Vue2[9].SetActive(true);
+                }
 
-            if (player2.GetHealth() >= 100)
-            {
-                lifePlayer2Vue1[9].SetActive(true);
-                lifePlayer2Vue2[9].SetActive(true);
+                if (player2.GetHealth() >= 100)
+                {
+                    lifePlayer2Vue1[9].SetActive(true);
+                    lifePlayer2Vue2[9].SetActive(true);
+                }
             }
 
 
@@ -164,8 +166,8 @@ namespace Com.MyCompany.MyGame
         {
             if (first)
             {
-                player1 = new PlayerStat(1);
-                player2 = new PlayerStat(1);
+                player1 = new PlayerStat(100);
+                player2 = new PlayerStat(100);
                 first = false;
             }
             if (SceneManager.GetActiveScene().name == "Game")
@@ -363,15 +365,11 @@ namespace Com.MyCompany.MyGame
             {
                 ResetUI();
                 isPlaying = false;
-                victoryP2.SetActive(true);
-                //StartCoroutine(DoAfter(3));
             }
             if (p2.GetHealth() <= 0)
             {
                 ResetUI();
                 isPlaying = false;
-                victoryP1.SetActive(true);
-                //StartCoroutine(DoAfter(3));
             }
         }
 

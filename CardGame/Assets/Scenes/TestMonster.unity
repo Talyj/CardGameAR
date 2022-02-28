@@ -419,6 +419,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 875218493465763330, guid: 7d98d30114a39504e9e156fb8be4f623, type: 3}
+      propertyPath: life
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 875218494527176035, guid: 7d98d30114a39504e9e156fb8be4f623, type: 3}
       propertyPath: m_Name
       value: Ekey
