@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using TMPro;
+ using UnityEngine.UI;
+
 
 public class Mobs : MonoBehaviour
 {
     public float life;
+    public float maxLife;
     public float damage;
     public float shield;
     public string type;
@@ -13,6 +17,9 @@ public class Mobs : MonoBehaviour
     public Animator anim;
     public bool isUsed;
     public GameObject particles;
+    [SerializeField] private TextMeshProUGUI vieMob;
+    [SerializeField] private Image vieCurrent;
+    [SerializeField] private GameObject canvas;
 
     public void Start()
     {
@@ -20,6 +27,23 @@ public class Mobs : MonoBehaviour
     }
 
     void Update() {
+
+        vieMob.text = life.ToString() + "/" + maxLife.ToString();
+        vieCurrent.fillAmount = life/maxLife;
+
+        if(life > (0.7*maxLife)) {
+            vieCurrent.color = new Color32(26, 115, 23, 255);
+        }
+
+        if(life < 0.7*maxLife && life > 0.4*maxLife) {
+            vieCurrent.color = new Color32(166, 158, 45, 255);
+        }
+
+        if(life < 0.4*maxLife) {
+            vieCurrent.color = new Color32(155, 29, 29, 255);
+        }
+
+
         //Pour les test d'animations, à retirer
         if(Input.GetKeyDown("s")) {
             OnSpawn();
@@ -55,10 +79,12 @@ public class Mobs : MonoBehaviour
 
     public void OnSpawn() {
         particles.SetActive(true);
+        //life = maxLife; 
         Invoke("SpawnMe", 2.0f);
     }
 
     private void SpawnMe() {
+        canvas.SetActive(true);
         this.gameObject.SetActive(true);
         anim.SetBool("Spawn", true);
         Invoke("Reset", 0.2f);
@@ -103,6 +129,7 @@ public class Mobs : MonoBehaviour
     private void DestroyEntity() {
         Destroy(this.gameObject);
         particles.SetActive(false);
+        canvas.SetActive(false);
     }
 
 }
