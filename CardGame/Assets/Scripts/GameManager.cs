@@ -199,27 +199,33 @@ namespace Com.MyCompany.MyGame
                         {
                             turnP1.SetActive(true);
                         }
-                        #region DRAW
-                        if (turn == 1 || turn == 2)
-                        {
-                            DrawCard(playerTurn, true);
-                        }
-                        else
-                        {
-                            DrawCard(playerTurn);
-                        }
-                        #endregion
-                        
+                        //#region DRAW
+                        //if (turn == 1 || turn == 2)
+                        //{
+                        //    DrawCard(playerTurn, true);
+                        //}
+                        //else
+                        //{
+                        //    DrawCard(playerTurn);
+                        //}
+                        //#endregion
+
                         break;
                     }
                 case gameState.mainPhase:
                     {
                         playText.SetActive(true);
-                        //TODO la partie comment� juste en dessous permet de tester sans carte PARCE QUE J'AVAIS PAS DE PTN DE CARTE POUR TESTER
-                        //Donc oue c'est un truc que tu peux supprimer quand t'auras des cartes
-                        //if (Input.GetKeyDown(KeyCode.A))
-                        //{
-                        //    CardNumber(true);
+                        if (isTargetFound)
+                        {
+                            playerTurn._cardsOnField = new List<Mobs>();
+                            isTargetFound = false;
+                            var cards = FindObjectsOfType<DefaultObserverEventHandler>();
+                            foreach (var c in cards)
+                            {
+                                if (isTrackingMarker(c.name))
+                                {
+                                    var card = c.GetComponentInChildren<Mobs>();
+                                    playerTurn.SetCardsOnField(card);
 
                         //}
                         //Jsais pas pourquoi �a marche mais �a marche du coup
@@ -270,11 +276,11 @@ namespace Com.MyCompany.MyGame
                                 {
                                     healTurn += c.damage;
                                     c.Heal();
-                                    playerTurn.SetHealth(playerTurn.GetHealth() + healTurn); 
+                                    playerTurn.SetHealth(playerTurn.GetHealth() + healTurn);
                                 }
                                 else if (c.CompareTag("ekey"))
                                 {
-                                    foreach(var ca in playerTurn.GetCardsOnField())
+                                    foreach (var ca in playerTurn.GetCardsOnField())
                                     {
                                         ca.life += c.damage;
                                     }
@@ -317,8 +323,19 @@ namespace Com.MyCompany.MyGame
 
         private IEnumerator DoAfter(float time)
         {
-            yield return new WaitForSeconds(time);
-            ReturnMenu();
+            try
+            {
+                var imageTarget = GameObject.Find(imageTargetName);
+                var trackable = imageTarget.GetComponent<TrackableBehaviour>();
+                var status = trackable.CurrentStatus.ToString();
+                return status == "TRACKED";
+            }
+            catch (Exception e)
+            {
+                var toto = 0;
+            }
+            return true;
+
         }
 
         private bool DrawCard(PlayerStat player, bool isFirstDraw = false)
@@ -408,7 +425,7 @@ namespace Com.MyCompany.MyGame
             switch (state)
             {
                 case gameState.drawPhase:
-                    {                        
+                    {
                         state = gameState.mainPhase;
                         StartCoroutine(ChangeBoard(mainBoard, endBoard, drawBoard, battleBoard));
                         break;
