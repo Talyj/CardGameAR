@@ -104,12 +104,8 @@ namespace Com.MyCompany.MyGame
 
         private void GameLoop(PlayerStat playerTurn, PlayerStat otherPlayer)
         {
-            //If otherPlayer block the commands 
             switch (state)
             {
-                //TODO Pour la partie ou tu tire une carte du deck, au lieu de le faire dans le jeu 
-                //je pensais le faire dans la vraie vie en mode on a notre deck à côté de nous et on pioche dedans directement
-                //Si ça te convient alors efface la region "DRAW"
                 case gameState.drawPhase:
                     {
                         ////setActive text -> Piochez une carte !
@@ -121,16 +117,16 @@ namespace Com.MyCompany.MyGame
                         {
                             turnP1.SetActive(true);
                         }
-                        #region DRAW
-                        if (turn == 1 || turn == 2)
-                        {
-                            DrawCard(playerTurn, true);
-                        }
-                        else
-                        {
-                            DrawCard(playerTurn);
-                        }
-                        #endregion
+                        //#region DRAW
+                        //if (turn == 1 || turn == 2)
+                        //{
+                        //    DrawCard(playerTurn, true);
+                        //}
+                        //else
+                        //{
+                        //    DrawCard(playerTurn);
+                        //}
+                        //#endregion
                         
                         break;
                     }
@@ -142,7 +138,7 @@ namespace Com.MyCompany.MyGame
                             playerTurn._cardsOnField = new List<Mobs>();
                             isTargetFound = false;
                             var cards = FindObjectsOfType<DefaultObserverEventHandler>();
-                            foreach(var c in cards)
+                            foreach (var c in cards)
                             {
                                 if (isTrackingMarker(c.name))
                                 {
@@ -164,24 +160,15 @@ namespace Com.MyCompany.MyGame
                     }
                 case gameState.battlePhase:
                     {
-                        //Need image target to determine what is being played
-                        //Loop trought the list cardsOnField to get damage/effects ...
                         damageTurn = 0;
                         healTurn = 0;
                         battleText.SetActive(true);
 
-                        if(turn == 1)
+                        if (turn == 1)
                         {
                             ChangePhase();
                         }
-                        //TODO c'est juste un test de victory condition qui pourra être effacé plus tard
-                        #region test
-                        if (Input.GetKeyDown(KeyCode.A))
-                        {
-                            otherPlayer.SetHealth(0);
-                        }
-                        #endregion
-                        if (playerTurn.GetCardsOnField() != null)
+                        if (playerTurn.GetCardsOnField().Count > 0)
                         {
                             foreach (var c in playerTurn.GetCardsOnField())
                             {
@@ -204,7 +191,7 @@ namespace Com.MyCompany.MyGame
                                     }
                                 }
                             }
-                            if (otherPlayer.GetCardsOnField() != null)
+                            if (otherPlayer.GetCardsOnField().Count > 0)
                             {
                                 foreach (var c in otherPlayer.GetCardsOnField())
                                 {
@@ -228,6 +215,7 @@ namespace Com.MyCompany.MyGame
                             }
 
                             battleText.SetActive(false);
+                            ChangePhase();
                         }
                         break;
                     }
@@ -241,10 +229,19 @@ namespace Com.MyCompany.MyGame
 
         private bool isTrackingMarker(string imageTargetName)
         {
-            var imageTarget = GameObject.Find(imageTargetName);
-            var trackable = imageTarget.GetComponent<TrackableBehaviour>();
-            var status = trackable.CurrentStatus.ToString();
-            return status == "TRACKED";
+            try
+            {
+                var imageTarget = GameObject.Find(imageTargetName);
+                var trackable = imageTarget.GetComponent<TrackableBehaviour>();
+                var status = trackable.CurrentStatus.ToString();
+                return status == "TRACKED";
+            }
+            catch(Exception e)
+            {
+                var toto= 0;
+            }
+            return true;
+            
         }
 
         private bool DrawCard(PlayerStat player, bool isFirstDraw = false)
@@ -255,7 +252,6 @@ namespace Com.MyCompany.MyGame
                 {
                     for (var i = 0; i < 3; i++)
                     {
-                        //MODIFY with the Mobs with the correct ID
                         var cards = UnityEngine.Random.Range(0, 9);
                         player.SetCardsInHand(new Mobs());
                     }
