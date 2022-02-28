@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Vuforia;
 
 namespace Com.MyCompany.MyGame
 {
@@ -17,19 +19,15 @@ namespace Com.MyCompany.MyGame
             mainPhase = 1,
             //Here is when we order attacks
             battlePhase = 2,
-            endphase = 3
         };
 
         private float timeBetweenBoards = 2;
 
         private int turn;
         private gameState state;
-        private bool isEndTurn;
-        private PlayerStat player1 = new PlayerStat(1);
-        private PlayerStat player2 = new PlayerStat(1);
+        private PlayerStat player1;
+        private PlayerStat player2;
 
-        private float health1;
-        private float health2;
         private bool first;
 
         private int currentCardNumber;
@@ -39,12 +37,11 @@ namespace Com.MyCompany.MyGame
         private float healTurn;
 
         private bool isPlaying;
-        private bool next;
+        private bool isTargetFound;
         //[SerializeField] private GameObject[] boards;
         [SerializeField] private GameObject drawBoard;
         [SerializeField] private GameObject mainBoard;
         [SerializeField] private GameObject battleBoard;
-        [SerializeField] private GameObject endBoard;
         [SerializeField] private GameObject turnP1;
         [SerializeField] private GameObject turnP2;
         [SerializeField] private GameObject victoryP1;
@@ -54,7 +51,6 @@ namespace Com.MyCompany.MyGame
         [SerializeField] private GameObject drawText;
         [SerializeField] private GameObject playText;
         [SerializeField] private GameObject battleText;
-        [SerializeField] private GameObject endText;
 
         [SerializeField] private TextMeshProUGUI turnNumber;
         [SerializeField] private GameObject victoryPanelP1;
@@ -77,11 +73,10 @@ namespace Com.MyCompany.MyGame
             turn = 1;
             isPlaying = true;
             state = gameState.drawPhase;
-            isEndTurn = true;
             first = true;
             currentCardNumber = 0;
             oldCardNumber = 0;
-            next = false;
+            isTargetFound = false;
             #endregion
         }
 
@@ -182,12 +177,8 @@ namespace Com.MyCompany.MyGame
 
         private void GameLoop(PlayerStat playerTurn, PlayerStat otherPlayer)
         {
-            //If otherPlayer block the commands 
             switch (state)
             {
-                //TODO Pour la partie ou tu tire une carte du deck, au lieu de le faire dans le jeu 
-                //je pensais le faire dans la vraie vie en mode on a notre deck � c�t� de nous et on pioche dedans directement
-                //Si �a te convient alors efface la region "DRAW"
                 case gameState.drawPhase:
                     {
                         ////setActive text -> Piochez une carte !
@@ -199,74 +190,67 @@ namespace Com.MyCompany.MyGame
                         {
                             turnP1.SetActive(true);
                         }
-                        #region DRAW
-                        if (turn == 1 || turn == 2)
-                        {
-                            DrawCard(playerTurn, true);
-                        }
-                        else
-                        {
-                            DrawCard(playerTurn);
-                        }
-                        #endregion
+                        //#region DRAW
+                        //if (turn == 1 || turn == 2)
+                        //{
+                        //    DrawCard(playerTurn, true);
+                        //}
+                        //else
+                        //{
+                        //    DrawCard(playerTurn);
+                        //}
+                        //#endregion
                         
                         break;
                     }
                 case gameState.mainPhase:
                     {
-                        playText.SetActive(true);
-                        //TODO la partie comment� juste en dessous permet de tester sans carte PARCE QUE J'AVAIS PAS DE PTN DE CARTE POUR TESTER
-                        //Donc oue c'est un truc que tu peux supprimer quand t'auras des cartes
-                        //if (Input.GetKeyDown(KeyCode.A))
-                        //{
-                        //    CardNumber(true);
-
-                        //}
-                        //Jsais pas pourquoi �a marche mais �a marche du coup
-                        //il faut remplacer �a par un fonction qui d�tecte une nouvelle imagetarget mais je sais pas laquelle
-                        if (currentCardNumber != oldCardNumber)
+                        playText.SetActive(true);                       
+                        if (isTargetFound)
                         {
-                            oldCardNumber = currentCardNumber;
-                            //TODO Ajouter l'image target detection, ajoute la carte d�tect�e dans la liste
-                            //Remplacer new Mobs avec le monstre d�tect� lors du spawn
-                            playerTurn.SetCardsOnField(new Mobs());
+                            playerTurn._cardsOnField = new List<Mobs>();
+                            isTargetFound = false;
+                            var cards = FindObjectsOfType<DefaultObserverEventHandler>();
+                            foreach (var c in cards)
+                            {
+                                if (isTrackingMarker(c.name))
+                                {
+                                    var card = c.GetComponentInChildren<Mobs>();
+                                    playerTurn.SetCardsOnField(card);
 
-                            //Dans le cas ou Tajma spawn il soigne
-                            //TODO Ici on echange le "c" avec l'objet qu'on r�cup�re lorsqu'on d�tecte le monstre
-                            //if (c.CompareTag("tajma") && !c.isUsed)
-                            //{
-                            //    playerTurn.SetHealth(playerTurn.GetHealth + c.damage);
-                            //    c.isUsed = true
-                            //}
+                                    if (card.CompareTag("tajma") && !card.isUsed)
+                                    {
+                                        playerTurn.SetHealth(playerTurn.GetHealth() + card.damage);
+                                        card.isUsed = true;
+                                    }
+                                }
+                            }
+
+                            ChangePhase();
                             playText.SetActive(false);
                         }
                         break;
                     }
                 case gameState.battlePhase:
                     {
-                        //Need image target to determine what is being played
-                        //Loop trought the list cardsOnField to get damage/effects ...
                         damageTurn = 0;
                         healTurn = 0;
                         battleText.SetActive(true);
 
-                        //TODO c'est juste un test de victory condition qui pourra �tre effac� plus tard
-                        #region test
-                        if (Input.GetKeyDown(KeyCode.A))
+                        if (turn == 1)
                         {
-                            otherPlayer.SetHealth(0);
+                            ChangePhase();
                         }
-                        #endregion
-                        if (playerTurn.GetCardsOnField() != null)
+                        if (playerTurn.GetCardsOnField().Count > 0)
                         {
                             foreach (var c in playerTurn.GetCardsOnField())
                             {
-                                if (c.CompareTag("DPS"))
+                                if (c.CompareTag("dps"))
                                 {
                                     damageTurn += c.damage;
                                     c.Attack();
                                 }
-                                else if (c.CompareTag("ymir"))
+                                else if (c.CompareTag("healer"))
                                 {
                                     healTurn += c.damage;
                                     c.Heal();
@@ -280,7 +264,7 @@ namespace Com.MyCompany.MyGame
                                     }
                                 }
                             }
-                            if (otherPlayer.GetCardsOnField() != null)
+                            if (otherPlayer.GetCardsOnField().Count > 0)
                             {
                                 foreach (var c in otherPlayer.GetCardsOnField())
                                 {
@@ -304,21 +288,33 @@ namespace Com.MyCompany.MyGame
                             }
 
                             battleText.SetActive(false);
+                            ChangePhase();
                         }
-                        break;
-                    }
-                case gameState.endphase:
-                    {
-                        //Jsais plus � quoi sert cette phase mais nsm on la garde
                         break;
                     }
             }
         }
 
-        private IEnumerator DoAfter(float time)
+        public void TargetFound()
         {
-            yield return new WaitForSeconds(time);
-            ReturnMenu();
+            isTargetFound = true;
+        }
+
+        private bool isTrackingMarker(string imageTargetName)
+        {
+            try
+            {
+                var imageTarget = GameObject.Find(imageTargetName);
+                var trackable = imageTarget.GetComponent<TrackableBehaviour>();
+                var status = trackable.CurrentStatus.ToString();
+                return status == "TRACKED";
+            }
+            catch(Exception e)
+            {
+                var toto= 0;
+            }
+            return true;
+            
         }
 
         private bool DrawCard(PlayerStat player, bool isFirstDraw = false)
@@ -329,7 +325,6 @@ namespace Com.MyCompany.MyGame
                 {
                     for (var i = 0; i < 3; i++)
                     {
-                        //MODIFY with the Mobs with the correct ID
                         var cards = UnityEngine.Random.Range(0, 9);
                         player.SetCardsInHand(new Mobs());
                     }
@@ -350,14 +345,14 @@ namespace Com.MyCompany.MyGame
             drawBoard.SetActive(false);
             mainBoard.SetActive(false);
             battleBoard.SetActive(false);
-            endBoard.SetActive(false);
+            //endBoard.SetActive(false);
             turnP1.SetActive(false);
             turnP2.SetActive(false);
 
             drawText.SetActive(false);
             playText.SetActive(false);
             battleText.SetActive(false);
-            endText.SetActive(false);
+            //endText.SetActive(false);
         }
 
         public void CheckVictory(PlayerStat p1, PlayerStat p2)
@@ -367,14 +362,14 @@ namespace Com.MyCompany.MyGame
                 ResetUI();
                 isPlaying = false;
                 victoryP2.SetActive(true);
-                StartCoroutine(DoAfter(3));
+                //StartCoroutine(DoAfter(3));
             }
             if (p2.GetHealth() <= 0)
             {
                 ResetUI();
                 isPlaying = false;
                 victoryP1.SetActive(true);
-                StartCoroutine(DoAfter(3));
+                //StartCoroutine(DoAfter(3));
             }
         }
 
@@ -390,11 +385,10 @@ namespace Com.MyCompany.MyGame
             }
         }
 
-        private IEnumerator ChangeBoard(GameObject boardToDisplay, GameObject boardToHide1, GameObject boardToHide2, GameObject boardToHide3)
+        private IEnumerator ChangeBoard(GameObject boardToDisplay, GameObject boardToHide1, GameObject boardToHide2)
         {
             boardToHide1.SetActive(false);
             boardToHide2.SetActive(false);
-            boardToHide3.SetActive(false);
             boardToDisplay.SetActive(true);
             yield return new WaitForSeconds(timeBetweenBoards);
             boardToDisplay.SetActive(false);
@@ -410,25 +404,19 @@ namespace Com.MyCompany.MyGame
                 case gameState.drawPhase:
                     {                        
                         state = gameState.mainPhase;
-                        StartCoroutine(ChangeBoard(mainBoard, endBoard, drawBoard, battleBoard));
+                        StartCoroutine(ChangeBoard(mainBoard, drawBoard, battleBoard));
                         break;
                     }
                 case gameState.mainPhase:
                     {
                         state = gameState.battlePhase;
-                        StartCoroutine(ChangeBoard(battleBoard, endBoard, drawBoard, mainBoard));
+                        StartCoroutine(ChangeBoard(battleBoard, drawBoard, mainBoard));
                         break;
                     }
                 case gameState.battlePhase:
                     {
-                        state = gameState.endphase;
-                        StartCoroutine(ChangeBoard(endBoard, mainBoard, drawBoard, battleBoard));
-                        break;
-                    }
-                case gameState.endphase:
-                    {
                         state = gameState.drawPhase;
-                        StartCoroutine(ChangeBoard(drawBoard, endBoard, mainBoard, battleBoard));
+                        StartCoroutine(ChangeBoard(drawBoard, mainBoard, battleBoard));
                         turn++;
                         if (turn % 2 == 0)
                         {
@@ -440,7 +428,6 @@ namespace Com.MyCompany.MyGame
                         }
                         break;
                     }
-
             }
         }
 

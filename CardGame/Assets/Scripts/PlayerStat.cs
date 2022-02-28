@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerStat
 {
     private float _health;
-    private List<Mobs> _cardsOnField;
+    public List<Mobs> _cardsOnField;
     private List<Mobs> _cardsInHand;
 
     public PlayerStat(float health)
     {
-        _cardsOnField = null;
+        _cardsOnField = new List<Mobs>();
         _health = health;
     }
 
