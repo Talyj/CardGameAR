@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Vuforia;
 
 namespace Com.MyCompany.MyGame
 {
@@ -134,30 +136,27 @@ namespace Com.MyCompany.MyGame
                     }
                 case gameState.mainPhase:
                     {
-                        playText.SetActive(true);
-                        //TODO la partie commenté juste en dessous permet de tester sans carte PARCE QUE J'AVAIS PAS DE PTN DE CARTE POUR TESTER
-                        //Donc oue c'est un truc que tu peux supprimer quand t'auras des cartes
-                        //if (Input.GetKeyDown(KeyCode.A))
-                        //{
-                        //    CardNumber(true);
-
-                        //}
-                        //Jsais pas pourquoi ça marche mais ça marche du coup
-                        //il faut remplacer ça par un fonction qui détecte une nouvelle imagetarget mais je sais pas laquelle
+                        playText.SetActive(true);                       
                         if (isTargetFound)
                         {
+                            playerTurn._cardsOnField = new List<Mobs>();
                             isTargetFound = false;
-                            //TODO Ajouter l'image target detection, ajoute la carte détectée dans la liste
-                            //Remplacer new Mobs avec le monstre détecté lors du spawn
-                            playerTurn.SetCardsOnField(new Mobs());
+                            var cards = FindObjectsOfType<DefaultObserverEventHandler>();
+                            foreach(var c in cards)
+                            {
+                                if (isTrackingMarker(c.name))
+                                {
+                                    var card = c.GetComponentInChildren<Mobs>();
+                                    playerTurn.SetCardsOnField(card);
 
-                            //Dans le cas ou Tajma spawn il soigne
-                            //TODO Ici on echange le "c" avec l'objet qu'on récupère lorsqu'on détecte le monstre
-                            //if (c.CompareTag("tajma") && !c.isUsed)
-                            //{
-                            //    playerTurn.SetHealth(playerTurn.GetHealth + c.damage);
-                            //    c.isUsed = true
-                            //}
+                                    if (card.CompareTag("tajma") && !card.isUsed)
+                                    {
+                                        playerTurn.SetHealth(playerTurn.GetHealth() + card.damage);
+                                        card.isUsed = true;
+                                    }
+                                }
+                            }
+
                             ChangePhase();
                             playText.SetActive(false);
                         }
@@ -186,12 +185,12 @@ namespace Com.MyCompany.MyGame
                         {
                             foreach (var c in playerTurn.GetCardsOnField())
                             {
-                                if (c.CompareTag("DPS"))
+                                if (c.CompareTag("dps"))
                                 {
                                     damageTurn += c.damage;
                                     c.Attack();
                                 }
-                                else if (c.CompareTag("ymir"))
+                                else if (c.CompareTag("healer"))
                                 {
                                     healTurn += c.damage;
                                     c.Heal();
@@ -238,6 +237,14 @@ namespace Com.MyCompany.MyGame
         public void TargetFound()
         {
             isTargetFound = true;
+        }
+
+        private bool isTrackingMarker(string imageTargetName)
+        {
+            var imageTarget = GameObject.Find(imageTargetName);
+            var trackable = imageTarget.GetComponent<TrackableBehaviour>();
+            var status = trackable.CurrentStatus.ToString();
+            return status == "TRACKED";
         }
 
         private bool DrawCard(PlayerStat player, bool isFirstDraw = false)

@@ -13,10 +13,12 @@ public class Mobs : MonoBehaviour
     public Animator anim;
     public bool isUsed;
     public GameObject particles;
+    public bool isPlayed;
 
     public void Start()
     {
         isUsed = false;
+        isPlayed = false;
     }
 
     void Update() {
