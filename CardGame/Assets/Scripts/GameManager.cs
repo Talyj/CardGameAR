@@ -127,12 +127,12 @@ namespace Com.MyCompany.MyGame
                         //    DrawCard(playerTurn);
                         //}
                         //#endregion
-                        
+
                         break;
                     }
                 case gameState.mainPhase:
                     {
-                        playText.SetActive(true);                       
+                        playText.SetActive(true);
                         if (isTargetFound)
                         {
                             playerTurn._cardsOnField = new List<Mobs>();
@@ -181,11 +181,11 @@ namespace Com.MyCompany.MyGame
                                 {
                                     healTurn += c.damage;
                                     c.Heal();
-                                    playerTurn.SetHealth(playerTurn.GetHealth() + healTurn); 
+                                    playerTurn.SetHealth(playerTurn.GetHealth() + healTurn);
                                 }
                                 else if (c.CompareTag("ekey"))
                                 {
-                                    foreach(var ca in playerTurn.GetCardsOnField())
+                                    foreach (var ca in playerTurn.GetCardsOnField())
                                     {
                                         ca.life += c.damage;
                                     }
@@ -236,12 +236,12 @@ namespace Com.MyCompany.MyGame
                 var status = trackable.CurrentStatus.ToString();
                 return status == "TRACKED";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                var toto= 0;
+                var toto = 0;
             }
             return true;
-            
+
         }
 
         private bool DrawCard(PlayerStat player, bool isFirstDraw = false)
@@ -329,7 +329,7 @@ namespace Com.MyCompany.MyGame
             switch (state)
             {
                 case gameState.drawPhase:
-                    {                        
+                    {
                         state = gameState.mainPhase;
                         StartCoroutine(ChangeBoard(mainBoard, drawBoard, battleBoard));
                         break;
