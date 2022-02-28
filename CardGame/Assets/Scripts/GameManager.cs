@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 namespace Com.MyCompany.MyGame
 {
@@ -24,8 +25,8 @@ namespace Com.MyCompany.MyGame
         private int turn;
         private gameState state;
         private bool isEndTurn;
-        private PlayerStat player1;
-        private PlayerStat player2;
+        private PlayerStat player1 = new PlayerStat(1);
+        private PlayerStat player2 = new PlayerStat(1);
 
         private float health1;
         private float health2;
@@ -55,6 +56,21 @@ namespace Com.MyCompany.MyGame
         [SerializeField] private GameObject battleText;
         [SerializeField] private GameObject endText;
 
+        [SerializeField] private TextMeshProUGUI turnNumber;
+        [SerializeField] private GameObject victoryPanelP1;
+        [SerializeField] private GameObject victoryPanelP2;
+
+        [SerializeField] private GameObject[] lifePlayer1Vue1;
+        [SerializeField] private GameObject[] lifePlayer2Vue1;
+        [SerializeField] private GameObject[] lifePlayer1Vue2;
+        [SerializeField] private GameObject[] lifePlayer2Vue2;
+        [SerializeField] private TextMeshProUGUI vieJoueur1Vue1;
+        [SerializeField] private TextMeshProUGUI vieJoueur2Vue1;
+        [SerializeField] private TextMeshProUGUI vieJoueur1Vue2;
+        [SerializeField] private TextMeshProUGUI vieJoueur2Vue2;
+        [SerializeField] private GameObject panelJoueur1;
+        [SerializeField] private GameObject panelJoueur2;
+
         private void Start()
         {
             #region game rules
@@ -69,17 +85,70 @@ namespace Com.MyCompany.MyGame
             #endregion
         }
 
-        private void Update()
-        {
+        void Update() {
+            turnNumber.text = turn.ToString();
+            vieJoueur1Vue1.text = player1.GetHealth().ToString() + "/100";
+            vieJoueur2Vue1.text = player2.GetHealth().ToString() + "/100";
+            vieJoueur1Vue2.text = player1.GetHealth().ToString() + "/100";
+            vieJoueur2Vue2.text = player2.GetHealth().ToString() + "/100";
+            if(player1.GetHealth() <= 0) {
+                victoryPanelP2.SetActive(true);
+            }
+
+            if(player2.GetHealth() <= 0) {
+                victoryPanelP1.SetActive(true);
+            }
+
+            for(int i = 100; i > 0; i=i-10) {
+                if(player1.GetHealth() < i && player1.GetHealth() >= (i-10)) {
+                    for(int j = (i/10)-1; j < 10; j++) {
+                        lifePlayer1Vue1[j].SetActive(false);
+                        lifePlayer1Vue2[j].SetActive(false);
+                    }
+                    lifePlayer1Vue1[(i/10)-1].SetActive(true);
+                    lifePlayer1Vue2[(i/10)-1].SetActive(true);
+                    for(int j = (i/10)-1; j > 0; j--) {
+                        lifePlayer1Vue1[j-1].SetActive(true);
+                        lifePlayer1Vue2[j-1].SetActive(true);
+                    }
+                }
+            }
+
+            for(int i = 100; i > 0; i=i-10) {
+                if(player2.GetHealth() < i && player2.GetHealth() >= (i-10)) {
+                    for(int j = (i/10)-1; j < 10; j++) {
+                        lifePlayer2Vue1[j].SetActive(false);
+                        lifePlayer2Vue2[j].SetActive(false);
+                    }
+                    lifePlayer2Vue1[(i/10)-1].SetActive(true);
+                    lifePlayer2Vue2[(i/10)-1].SetActive(true);
+                    for(int j = (i/10)-1; j > 0; j--) {
+                        lifePlayer2Vue1[j-1].SetActive(true);
+                        lifePlayer2Vue2[j-1].SetActive(true);
+                    }
+                }
+            }
+
+            if(player1.GetHealth() >= 100) {
+                lifePlayer1Vue1[9].SetActive(true);
+                lifePlayer1Vue2[9].SetActive(true);
+            }
+
+            if(player2.GetHealth() >= 100) {
+                lifePlayer2Vue1[9].SetActive(true);
+                lifePlayer2Vue2[9].SetActive(true);
+            }
+
+
             if (isPlaying)
             {
                 MainGame();
-                Debug.Log("tour numéro : " + turn);
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Application.Quit();
             }
+
         }
 
         #region game rules
@@ -87,8 +156,8 @@ namespace Com.MyCompany.MyGame
         {
             if (first)
             {
-                player1 = new PlayerStat(100);
-                player2 = new PlayerStat(100);
+                player1 = new PlayerStat(1);
+                player2 = new PlayerStat(1);
                 first = false;
             }
             if (SceneManager.GetActiveScene().name == "Game")
@@ -96,11 +165,15 @@ namespace Com.MyCompany.MyGame
                 if (turn % 2 == 0)
                 {
                     //Tour 2 P2
+                    panelJoueur1.SetActive(false);
+                    panelJoueur2.SetActive(true);
                     GameLoop(player2, player1);
                 }
                 else
                 {
                     //Tour 1 P1
+                    panelJoueur1.SetActive(true);
+                    panelJoueur2.SetActive(false);
                     GameLoop(player1, player2);
                 }
                 CheckVictory(player1, player2);
@@ -113,8 +186,8 @@ namespace Com.MyCompany.MyGame
             switch (state)
             {
                 //TODO Pour la partie ou tu tire une carte du deck, au lieu de le faire dans le jeu 
-                //je pensais le faire dans la vraie vie en mode on a notre deck à côté de nous et on pioche dedans directement
-                //Si ça te convient alors efface la region "DRAW"
+                //je pensais le faire dans la vraie vie en mode on a notre deck ï¿½ cï¿½tï¿½ de nous et on pioche dedans directement
+                //Si ï¿½a te convient alors efface la region "DRAW"
                 case gameState.drawPhase:
                     {
                         ////setActive text -> Piochez une carte !
@@ -142,24 +215,24 @@ namespace Com.MyCompany.MyGame
                 case gameState.mainPhase:
                     {
                         playText.SetActive(true);
-                        //TODO la partie commenté juste en dessous permet de tester sans carte PARCE QUE J'AVAIS PAS DE PTN DE CARTE POUR TESTER
+                        //TODO la partie commentï¿½ juste en dessous permet de tester sans carte PARCE QUE J'AVAIS PAS DE PTN DE CARTE POUR TESTER
                         //Donc oue c'est un truc que tu peux supprimer quand t'auras des cartes
                         //if (Input.GetKeyDown(KeyCode.A))
                         //{
                         //    CardNumber(true);
 
                         //}
-                        //Jsais pas pourquoi ça marche mais ça marche du coup
-                        //il faut remplacer ça par un fonction qui détecte une nouvelle imagetarget mais je sais pas laquelle
+                        //Jsais pas pourquoi ï¿½a marche mais ï¿½a marche du coup
+                        //il faut remplacer ï¿½a par un fonction qui dï¿½tecte une nouvelle imagetarget mais je sais pas laquelle
                         if (currentCardNumber != oldCardNumber)
                         {
                             oldCardNumber = currentCardNumber;
-                            //TODO Ajouter l'image target detection, ajoute la carte détectée dans la liste
-                            //Remplacer new Mobs avec le monstre détecté lors du spawn
+                            //TODO Ajouter l'image target detection, ajoute la carte dï¿½tectï¿½e dans la liste
+                            //Remplacer new Mobs avec le monstre dï¿½tectï¿½ lors du spawn
                             playerTurn.SetCardsOnField(new Mobs());
 
                             //Dans le cas ou Tajma spawn il soigne
-                            //TODO Ici on echange le "c" avec l'objet qu'on récupère lorsqu'on détecte le monstre
+                            //TODO Ici on echange le "c" avec l'objet qu'on rï¿½cupï¿½re lorsqu'on dï¿½tecte le monstre
                             //if (c.CompareTag("tajma") && !c.isUsed)
                             //{
                             //    playerTurn.SetHealth(playerTurn.GetHealth + c.damage);
@@ -177,7 +250,7 @@ namespace Com.MyCompany.MyGame
                         healTurn = 0;
                         battleText.SetActive(true);
 
-                        //TODO c'est juste un test de victory condition qui pourra être effacé plus tard
+                        //TODO c'est juste un test de victory condition qui pourra ï¿½tre effacï¿½ plus tard
                         #region test
                         if (Input.GetKeyDown(KeyCode.A))
                         {
@@ -236,7 +309,7 @@ namespace Com.MyCompany.MyGame
                     }
                 case gameState.endphase:
                     {
-                        //Jsais plus à quoi sert cette phase mais nsm on la garde
+                        //Jsais plus ï¿½ quoi sert cette phase mais nsm on la garde
                         break;
                     }
             }

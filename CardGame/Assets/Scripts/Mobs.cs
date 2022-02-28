@@ -102,6 +102,7 @@ public class Mobs : MonoBehaviour
 
     private void DestroyEntity() {
         Destroy(this.gameObject);
+        particles.SetActive(false);
     }
 
 }
