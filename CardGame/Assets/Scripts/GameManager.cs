@@ -1,14 +1,17 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Vuforia;
 
 namespace Com.MyCompany.MyGame
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviourPunCallbacks
     {
         public static GameManager Instance;
         private enum gameState
@@ -82,7 +85,8 @@ namespace Com.MyCompany.MyGame
         {
             turnNumber.text = turn.ToString();
 
-            if(player1 != null && player2 != null) {
+            if (player1 != null && player2 != null)
+            {
                 vieJoueur1Vue1.text = player1.GetHealth().ToString() + "/100";
                 vieJoueur2Vue1.text = player2.GetHealth().ToString() + "/100";
                 vieJoueur1Vue2.text = player1.GetHealth().ToString() + "/100";
@@ -436,6 +440,99 @@ namespace Com.MyCompany.MyGame
             SceneManager.LoadScene("Launcher");
         }
         #endregion
+
+        #region PUN
+
+        [SerializeField] private Text roomName;
+        [SerializeField] private GameObject playerListPrefab;
+        [SerializeField] private Transform playerListContent;
+
+
+
+        public override void OnLeftRoom()
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        public void LeaveRoom()
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+
+        void LoadArena()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
+                return;
+            }
+            Debug.LogFormat("PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
+            PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
+        }
+
+        public override void OnPlayerEnteredRoom(Player other)
+        {
+            Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
+
+                LoadArena();
+            }
+
+
+        }
+
+        public override void OnPlayerLeftRoom(Player other)
+        {
+            Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
+
+                LoadArena();
+            }
+
+            #endregion
+        }
+
+        public void CreateRoom()
+        {
+            if (string.IsNullOrEmpty(roomName.text))
+            {
+                PhotonNetwork.CreateRoom(PhotonNetwork.NickName + " room");
+            }
+            else
+            {
+                PhotonNetwork.CreateRoom(roomName.text);
+            }
+            //if (string.IsNullOrEmpty(playerName.text))
+            //{
+            //    PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
+            //}
+            //else
+            //{
+            //    PhotonNetwork.NickName = playerName.text;
+            //}
+            //Debug.Log(PhotonNetwork.NickName);
+            Player[] players = PhotonNetwork.PlayerList;
+
+        }
+
+        public void JoinRoom(RoomInfo info)
+        {
+            PhotonNetwork.JoinRoom(info.Name);
+
+            Player[] players = PhotonNetwork.PlayerList;
+
+            for (int i = 0; i < players.Length; i++)
+            {
+                Instantiate(playerListPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
+            }
+        }
     }
+
 }
 
