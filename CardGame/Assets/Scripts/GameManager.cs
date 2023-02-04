@@ -220,23 +220,23 @@ namespace Com.MyCompany.MyGame
                         playText.SetActive(true);
                         if (isTargetFound)
                         {
-                            playerTurn._cardsOnField = new List<Mobs>();
-                            isTargetFound = false;
-                            var cards = FindObjectsOfType<DefaultObserverEventHandler>();
-                            foreach (var c in cards)
-                            {
-                                if (isTrackingMarker(c.name))
-                                {
-                                    var card = c.GetComponentInChildren<Mobs>();
-                                    playerTurn.SetCardsOnField(card);
+                            //playerTurn._cardsOnField = new List<Mobs>();
+                            //isTargetFound = false;
+                            //var cards = FindObjectsOfType<DefaultObserverEventHandler>();
+                            //foreach (var c in cards)
+                            //{
+                            //    if (isTrackingMarker(c.name))
+                            //    {
+                            //        var card = c.GetComponentInChildren<Mobs>();
+                            //        playerTurn.SetCardsOnField(card);
 
-                                    if (card.CompareTag("tajma") && !card.isUsed)
-                                    {
-                                        playerTurn.SetHealth(playerTurn.GetHealth() + card.damage);
-                                        card.isUsed = true;
-                                    }
-                                }
-                            }
+                            //        if (card.CompareTag("tajma") && !card.isUsed)
+                            //        {
+                            //            playerTurn.SetHealth(playerTurn.GetHealth() + card.damage);
+                            //            card.isUsed = true;
+                            //        }
+                            //    }
+                            //}
 
                             ChangePhase();
                             playText.SetActive(false);
@@ -311,10 +311,10 @@ namespace Com.MyCompany.MyGame
         {
             try
             {
-                var imageTarget = GameObject.Find(imageTargetName);
-                var trackable = imageTarget.GetComponent<TrackableBehaviour>();
-                var status = trackable.CurrentStatus.ToString();
-                return status == "TRACKED";
+                //var imageTarget = GameObject.Find(imageTargetName);
+                //var trackable = imageTarget.GetComponent<TrackableBehaviour>();
+                //var status = trackable.CurrentStatus.ToString();
+                //return status == "TRACKED";
             }
             catch (Exception e)
             {
