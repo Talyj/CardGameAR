@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Vuforia;
+//using Vuforia;
 
 namespace Com.MyCompany.MyGame
 {
