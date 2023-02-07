@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
     public GameObject menuRegles;
     public GameObject menuPause;
+    
+    public GameObject menuCards;
+    public Image card;
+    public Sprite[] cardId;
+    private int i = 0;
+
     public GameObject audioOn;
     public GameObject audioOff;
+
     public AudioSource menuAudio;
     public AudioSource buttonAudio;
 
@@ -27,6 +35,10 @@ public class Menu : MonoBehaviour
 
         if(menuPause) {
             menuPause.SetActive(false);
+        }
+
+        if(menuCards) {
+            menuCards.SetActive(false);
         }
     }
 
@@ -54,6 +66,16 @@ public class Menu : MonoBehaviour
         menuRegles.SetActive(false);
     }
 
+    public void DisplayCards() {
+        PlaySoundButton();
+        menuCards.SetActive(true);
+    }
+
+    public void ExitCards() {
+        PlaySoundButton();
+        menuCards.SetActive(false);
+    }
+
     public void DisplayPause() {
         PlaySoundButton();
         menuPause.SetActive(true);
@@ -62,6 +84,14 @@ public class Menu : MonoBehaviour
     public void ExitPause() {
         PlaySoundButton();
         menuPause.SetActive(false);
+    }
+
+    public void DisplayCardList(bool dir) {
+        if(dir) i += 1; else i -= 1;
+        if(i > cardId.Length-1) i = 0;
+        if(i < 0) i = cardId.Length-1;
+        Debug.Log(i);
+        card.sprite = cardId[i];
     }
 
     public void LoadMenu() {
