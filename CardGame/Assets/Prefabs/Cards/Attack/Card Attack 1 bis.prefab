@@ -146,6 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PreviewVisible: 1
+  RuntimeOcclusion: 0
+  RuntimeCollider: 0
   mTrackableName: t3_bis
   mInitializedInEditor: 1
   mDataSetPath: Vuforia/YGE.xml
@@ -155,6 +158,9 @@ MonoBehaviour:
   mHeight: 0.104568996
   mRuntimeTexture: {fileID: 0}
   mMotionHint: 1
+  mTrackingOptimization: 0
+  mTrackingOptimizationNeedsUpgrade: 0
+  mPreview: {fileID: 0}
 --- !u!114 &8678691531398600975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +174,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StatusFilter: 1
+  UsePoseSmoothing: 0
+  AnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 3.3333333
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.3
+      value: 1
+      inSlope: 3.3333333
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   OnTargetFound:
     m_PersistentCalls:
       m_Calls: []
