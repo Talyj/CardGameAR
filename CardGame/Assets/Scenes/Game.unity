@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -449,6 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -1720,7 +1721,20 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 1879057021}
-    m_RemovedComponents: []
+    - target: {fileID: 6134646385981461674, guid: fa66d988e4c8c9a42b766310d8f03052,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 133838203}
+    - target: {fileID: 6134646385981461674, guid: fa66d988e4c8c9a42b766310d8f03052,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6134646385981461673, guid: fa66d988e4c8c9a42b766310d8f03052, type: 3}
+    - {fileID: 6134646385981461678, guid: fa66d988e4c8c9a42b766310d8f03052, type: 3}
+    - {fileID: 6134646385981461672, guid: fa66d988e4c8c9a42b766310d8f03052, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fa66d988e4c8c9a42b766310d8f03052, type: 3}
 --- !u!4 &133838200 stripped
 Transform:
@@ -1728,6 +1742,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 133838199}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &133838201 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6134646385981461679, guid: fa66d988e4c8c9a42b766310d8f03052,
+    type: 3}
+  m_PrefabInstance: {fileID: 133838199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &133838202 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6134646385981461674, guid: fa66d988e4c8c9a42b766310d8f03052,
+    type: 3}
+  m_PrefabInstance: {fileID: 133838199}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133838201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &133838203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133838201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 133838202}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t11
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 133838202}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &147386733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2845,6 +2896,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315306974}
     m_Modifications:
+    - target: {fileID: 3290522092127732232, guid: 71892f246b2205b41a067f5a0b7a2004,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 294274463}
+    - target: {fileID: 3290522092127732232, guid: 71892f246b2205b41a067f5a0b7a2004,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290522092127732235, guid: 71892f246b2205b41a067f5a0b7a2004,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3290522092127732239, guid: 71892f246b2205b41a067f5a0b7a2004,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2960,7 +3026,10 @@ PrefabInstance:
       propertyPath: OnTargetFound.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3290522092127732239, guid: 71892f246b2205b41a067f5a0b7a2004, type: 3}
+    - {fileID: 3290522092127732236, guid: 71892f246b2205b41a067f5a0b7a2004, type: 3}
+    - {fileID: 3290522092127732238, guid: 71892f246b2205b41a067f5a0b7a2004, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 71892f246b2205b41a067f5a0b7a2004, type: 3}
 --- !u!4 &294274460 stripped
 Transform:
@@ -2968,6 +3037,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 294274459}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &294274461 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3290522092127732237, guid: 71892f246b2205b41a067f5a0b7a2004,
+    type: 3}
+  m_PrefabInstance: {fileID: 294274459}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &294274462 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3290522092127732232, guid: 71892f246b2205b41a067f5a0b7a2004,
+    type: 3}
+  m_PrefabInstance: {fileID: 294274459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294274461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &294274463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294274461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 294274462}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t10
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 294274462}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1001 &300132675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3115,7 +3221,25 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 1418912906}
-    m_RemovedComponents: []
+    - target: {fileID: 2243441994809665498, guid: b742189ae4221994d876b2fb94dafd80,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 300132679}
+    - target: {fileID: 2243441994809665498, guid: b742189ae4221994d876b2fb94dafd80,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2243441994809665499, guid: b742189ae4221994d876b2fb94dafd80,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2243441994809663527, guid: b742189ae4221994d876b2fb94dafd80, type: 3}
+    - {fileID: 2243441994809663526, guid: b742189ae4221994d876b2fb94dafd80, type: 3}
+    - {fileID: 2243441994809663524, guid: b742189ae4221994d876b2fb94dafd80, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b742189ae4221994d876b2fb94dafd80, type: 3}
 --- !u!4 &300132676 stripped
 Transform:
@@ -3123,6 +3247,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 300132675}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &300132677 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2243441994809663521, guid: b742189ae4221994d876b2fb94dafd80,
+    type: 3}
+  m_PrefabInstance: {fileID: 300132675}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &300132678 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2243441994809665498, guid: b742189ae4221994d876b2fb94dafd80,
+    type: 3}
+  m_PrefabInstance: {fileID: 300132675}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300132677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &300132679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300132677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 300132678}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t6_bis
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 300132678}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &305657949
 GameObject:
   m_ObjectHideFlags: 0
@@ -4017,6 +4178,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315306974}
     m_Modifications:
+    - target: {fileID: 17038241164589752, guid: 14522318932cf5847870de1c75394c11,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 17038241164589753, guid: 14522318932cf5847870de1c75394c11,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 415187164}
+    - target: {fileID: 17038241164589753, guid: 14522318932cf5847870de1c75394c11,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 17038241164589756, guid: 14522318932cf5847870de1c75394c11,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4157,7 +4333,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 633974341}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 17038241164589756, guid: 14522318932cf5847870de1c75394c11, type: 3}
+    - {fileID: 17038241164589757, guid: 14522318932cf5847870de1c75394c11, type: 3}
+    - {fileID: 17038241164589755, guid: 14522318932cf5847870de1c75394c11, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 14522318932cf5847870de1c75394c11, type: 3}
 --- !u!4 &415187161 stripped
 Transform:
@@ -4165,6 +4344,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 415187160}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &415187162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 17038241164589758, guid: 14522318932cf5847870de1c75394c11,
+    type: 3}
+  m_PrefabInstance: {fileID: 415187160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &415187163 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 17038241164589753, guid: 14522318932cf5847870de1c75394c11,
+    type: 3}
+  m_PrefabInstance: {fileID: 415187160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415187162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &415187164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415187162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 415187163}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t11_bis
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 415187163}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &436348053
 GameObject:
   m_ObjectHideFlags: 0
@@ -4388,19 +4604,44 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6072256287860018033, guid: c27fa05e898145e49896d1e884e0ff23,
         type: 3}
+      propertyPath: mHeight
+      value: 0.104569
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072256287860018033, guid: c27fa05e898145e49896d1e884e0ff23,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 466156897}
+    - target: {fileID: 6072256287860018033, guid: c27fa05e898145e49896d1e884e0ff23,
+        type: 3}
+      propertyPath: mAspectRatio
+      value: 1.4938428
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072256287860018033, guid: c27fa05e898145e49896d1e884e0ff23,
+        type: 3}
       propertyPath: mDataSetPath
-      value: --- EMPTY ---
+      value: Vuforia/YGE.xml
       objectReference: {fileID: 0}
     - target: {fileID: 6072256287860018033, guid: c27fa05e898145e49896d1e884e0ff23,
         type: 3}
       propertyPath: mTrackableName
-      value: --- EMPTY ---
+      value: t3_bis
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072256287860018033, guid: c27fa05e898145e49896d1e884e0ff23,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6072256287860018034, guid: c27fa05e898145e49896d1e884e0ff23,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 9028089}
+    - target: {fileID: 6072256287860018038, guid: c27fa05e898145e49896d1e884e0ff23,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8536083334199958210, guid: c27fa05e898145e49896d1e884e0ff23,
         type: 3}
       propertyPath: m_Name
@@ -4521,7 +4762,10 @@ PrefabInstance:
       propertyPath: mTrackableName
       value: --- EMPTY ---
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6072256287860018034, guid: c27fa05e898145e49896d1e884e0ff23, type: 3}
+    - {fileID: 6072256287860017997, guid: c27fa05e898145e49896d1e884e0ff23, type: 3}
+    - {fileID: 6072256287860018035, guid: c27fa05e898145e49896d1e884e0ff23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c27fa05e898145e49896d1e884e0ff23, type: 3}
 --- !u!4 &466156894 stripped
 Transform:
@@ -4529,6 +4773,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 466156893}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &466156895 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6072256287860017996, guid: c27fa05e898145e49896d1e884e0ff23,
+    type: 3}
+  m_PrefabInstance: {fileID: 466156893}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &466156896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6072256287860018033, guid: c27fa05e898145e49896d1e884e0ff23,
+    type: 3}
+  m_PrefabInstance: {fileID: 466156893}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466156895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &466156897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466156895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 466156896}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t3_bis
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 466156896}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &481432758
 GameObject:
   m_ObjectHideFlags: 0
@@ -4829,12 +5110,30 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1313853758}
+    - target: {fileID: 2649014311999015990, guid: d867487810f5a2a46bad4d86113f0ba5,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 489643868}
+    - target: {fileID: 2649014311999015990, guid: d867487810f5a2a46bad4d86113f0ba5,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649014311999015991, guid: d867487810f5a2a46bad4d86113f0ba5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2649014311999015995, guid: d867487810f5a2a46bad4d86113f0ba5,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 1192604840}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2649014311999015995, guid: d867487810f5a2a46bad4d86113f0ba5, type: 3}
+    - {fileID: 2649014311999015994, guid: d867487810f5a2a46bad4d86113f0ba5, type: 3}
+    - {fileID: 2649014311999015988, guid: d867487810f5a2a46bad4d86113f0ba5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d867487810f5a2a46bad4d86113f0ba5, type: 3}
 --- !u!4 &489643865 stripped
 Transform:
@@ -4842,6 +5141,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 489643864}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &489643866 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2649014311999015993, guid: d867487810f5a2a46bad4d86113f0ba5,
+    type: 3}
+  m_PrefabInstance: {fileID: 489643864}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &489643867 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2649014311999015990, guid: d867487810f5a2a46bad4d86113f0ba5,
+    type: 3}
+  m_PrefabInstance: {fileID: 489643864}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489643866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &489643868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489643866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 489643867}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t10_bis
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 489643867}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!21 &492202352
 Material:
   serializedVersion: 8
@@ -4880,11 +5216,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315306974}
     m_Modifications:
+    - target: {fileID: 503474170875574600, guid: bff95157c82814041900c4d27296cb47,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 503474170875574612, guid: bff95157c82814041900c4d27296cb47,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 605367564}
+    - target: {fileID: 503474170875574615, guid: bff95157c82814041900c4d27296cb47,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 535760445}
+    - target: {fileID: 503474170875574615, guid: bff95157c82814041900c4d27296cb47,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4439752082295930319, guid: bff95157c82814041900c4d27296cb47,
         type: 3}
       propertyPath: m_Name
@@ -5020,7 +5371,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 503474170875574612, guid: bff95157c82814041900c4d27296cb47, type: 3}
+    - {fileID: 503474170875574611, guid: bff95157c82814041900c4d27296cb47, type: 3}
+    - {fileID: 503474170875574613, guid: bff95157c82814041900c4d27296cb47, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bff95157c82814041900c4d27296cb47, type: 3}
 --- !u!4 &535760442 stripped
 Transform:
@@ -5028,6 +5382,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 535760441}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &535760443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 503474170875574610, guid: bff95157c82814041900c4d27296cb47,
+    type: 3}
+  m_PrefabInstance: {fileID: 535760441}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &535760444 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 503474170875574615, guid: bff95157c82814041900c4d27296cb47,
+    type: 3}
+  m_PrefabInstance: {fileID: 535760441}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535760443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &535760445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535760443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 535760444}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t7_bis
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 535760444}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &540356430
 GameObject:
   m_ObjectHideFlags: 0
@@ -5394,7 +5785,25 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 1142137907}
-    m_RemovedComponents: []
+    - target: {fileID: 8801625844849318094, guid: 6c8518984a3b04b41a72d109a14c926a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8801625844849318095, guid: 6c8518984a3b04b41a72d109a14c926a,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 566451141}
+    - target: {fileID: 8801625844849318095, guid: 6c8518984a3b04b41a72d109a14c926a,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8801625844849318090, guid: 6c8518984a3b04b41a72d109a14c926a, type: 3}
+    - {fileID: 8801625844849318091, guid: 6c8518984a3b04b41a72d109a14c926a, type: 3}
+    - {fileID: 8801625844849318093, guid: 6c8518984a3b04b41a72d109a14c926a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6c8518984a3b04b41a72d109a14c926a, type: 3}
 --- !u!4 &566451138 stripped
 Transform:
@@ -5402,6 +5811,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 566451137}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &566451139 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8801625844849318088, guid: 6c8518984a3b04b41a72d109a14c926a,
+    type: 3}
+  m_PrefabInstance: {fileID: 566451137}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &566451140 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8801625844849318095, guid: 6c8518984a3b04b41a72d109a14c926a,
+    type: 3}
+  m_PrefabInstance: {fileID: 566451137}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566451139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &566451141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566451139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 566451140}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t9_bis
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 566451140}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &576014202
 GameObject:
   m_ObjectHideFlags: 0
@@ -7235,6 +7681,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315306974}
     m_Modifications:
+    - target: {fileID: 655809282908671766, guid: 6c2058d31f97e2540b4d2d6a1c1941d6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 655809282908671849, guid: 6c2058d31f97e2540b4d2d6a1c1941d6,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 745039365}
+    - target: {fileID: 655809282908671849, guid: 6c2058d31f97e2540b4d2d6a1c1941d6,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 655809282908671850, guid: 6c2058d31f97e2540b4d2d6a1c1941d6,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -7375,7 +7836,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 669731927}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 655809282908671850, guid: 6c2058d31f97e2540b4d2d6a1c1941d6, type: 3}
+    - {fileID: 655809282908671853, guid: 6c2058d31f97e2540b4d2d6a1c1941d6, type: 3}
+    - {fileID: 655809282908671851, guid: 6c2058d31f97e2540b4d2d6a1c1941d6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6c2058d31f97e2540b4d2d6a1c1941d6, type: 3}
 --- !u!4 &745039362 stripped
 Transform:
@@ -7383,6 +7847,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 745039361}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &745039363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 655809282908671852, guid: 6c2058d31f97e2540b4d2d6a1c1941d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 745039361}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &745039364 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 655809282908671849, guid: 6c2058d31f97e2540b4d2d6a1c1941d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 745039361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745039363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &745039365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745039363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 745039364}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t7
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 745039364}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &749053577
 GameObject:
   m_ObjectHideFlags: 0
@@ -10579,7 +11080,25 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 1846656600}
-    m_RemovedComponents: []
+    - target: {fileID: 5538137119868705990, guid: 5ffd50389376a17488a8a12d8b15f0a5,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 1012693790}
+    - target: {fileID: 5538137119868705990, guid: 5ffd50389376a17488a8a12d8b15f0a5,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5538137119868705991, guid: 5ffd50389376a17488a8a12d8b15f0a5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5538137119868705987, guid: 5ffd50389376a17488a8a12d8b15f0a5, type: 3}
+    - {fileID: 5538137119868705986, guid: 5ffd50389376a17488a8a12d8b15f0a5, type: 3}
+    - {fileID: 5538137119868705988, guid: 5ffd50389376a17488a8a12d8b15f0a5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5ffd50389376a17488a8a12d8b15f0a5, type: 3}
 --- !u!4 &1012693787 stripped
 Transform:
@@ -10587,6 +11106,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1012693786}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1012693788 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5538137119868705985, guid: 5ffd50389376a17488a8a12d8b15f0a5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1012693786}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1012693789 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5538137119868705990, guid: 5ffd50389376a17488a8a12d8b15f0a5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1012693786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012693788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1012693790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012693788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 1012693789}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t8_bis
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 1012693789}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &1013715105
 GameObject:
   m_ObjectHideFlags: 0
@@ -11021,12 +11577,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8678691531398600973, guid: 5012c8319abb284458b80efd41fac365,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8678691531398600974, guid: 5012c8319abb284458b80efd41fac365,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 1067418852}
     - target: {fileID: 8678691531398600977, guid: 5012c8319abb284458b80efd41fac365,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 31209306}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8678691531398600977, guid: 5012c8319abb284458b80efd41fac365, type: 3}
+    - {fileID: 8678691531398600978, guid: 5012c8319abb284458b80efd41fac365, type: 3}
+    - {fileID: 8678691531398600976, guid: 5012c8319abb284458b80efd41fac365, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5012c8319abb284458b80efd41fac365, type: 3}
 --- !u!4 &1067418849 stripped
 Transform:
@@ -11034,6 +11603,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1067418848}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1067418850 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8678691531398600979, guid: 5012c8319abb284458b80efd41fac365,
+    type: 3}
+  m_PrefabInstance: {fileID: 1067418848}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1067418851 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8678691531398600974, guid: 5012c8319abb284458b80efd41fac365,
+    type: 3}
+  m_PrefabInstance: {fileID: 1067418848}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067418850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1067418852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067418850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 1067418851}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t3_bis
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 1067418851}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &1071189442
 GameObject:
   m_ObjectHideFlags: 0
@@ -11252,12 +11858,30 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 857489759}
+    - target: {fileID: 8939091231180040165, guid: dc090d52e22b6fa4bb85f072aba4e237,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8939091231180040169, guid: dc090d52e22b6fa4bb85f072aba4e237,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 1725380109}
-    m_RemovedComponents: []
+    - target: {fileID: 8939091231180040170, guid: dc090d52e22b6fa4bb85f072aba4e237,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 1083815931}
+    - target: {fileID: 8939091231180040170, guid: dc090d52e22b6fa4bb85f072aba4e237,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8939091231180040169, guid: dc090d52e22b6fa4bb85f072aba4e237, type: 3}
+    - {fileID: 8939091231180040174, guid: dc090d52e22b6fa4bb85f072aba4e237, type: 3}
+    - {fileID: 8939091231180040168, guid: dc090d52e22b6fa4bb85f072aba4e237, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dc090d52e22b6fa4bb85f072aba4e237, type: 3}
 --- !u!4 &1083815928 stripped
 Transform:
@@ -11265,6 +11889,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1083815927}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1083815929 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8939091231180040175, guid: dc090d52e22b6fa4bb85f072aba4e237,
+    type: 3}
+  m_PrefabInstance: {fileID: 1083815927}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1083815930 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8939091231180040170, guid: dc090d52e22b6fa4bb85f072aba4e237,
+    type: 3}
+  m_PrefabInstance: {fileID: 1083815927}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083815929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1083815931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083815929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 1083815930}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t4
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 1083815930}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!43 &1087138805
 Mesh:
   m_ObjectHideFlags: 0
@@ -12211,12 +12872,30 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 977341035}
+    - target: {fileID: 7167996743361068593, guid: e5d91149edfa6974bb31838b6c921db2,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 1197766537}
+    - target: {fileID: 7167996743361068593, guid: e5d91149edfa6974bb31838b6c921db2,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7167996743361068594, guid: e5d91149edfa6974bb31838b6c921db2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 7167996743361068622, guid: e5d91149edfa6974bb31838b6c921db2,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 823692029}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7167996743361068622, guid: e5d91149edfa6974bb31838b6c921db2, type: 3}
+    - {fileID: 7167996743361068621, guid: e5d91149edfa6974bb31838b6c921db2, type: 3}
+    - {fileID: 7167996743361068623, guid: e5d91149edfa6974bb31838b6c921db2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e5d91149edfa6974bb31838b6c921db2, type: 3}
 --- !u!4 &1197766534 stripped
 Transform:
@@ -12224,6 +12903,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1197766533}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1197766535 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7167996743361068620, guid: e5d91149edfa6974bb31838b6c921db2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1197766533}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1197766536 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7167996743361068593, guid: e5d91149edfa6974bb31838b6c921db2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1197766533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197766535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1197766537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197766535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 1197766536}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t6
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 1197766536}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &1201738385
 GameObject:
   m_ObjectHideFlags: 0
@@ -12756,6 +13472,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 444509058}
+    - target: {fileID: 17604479476736198, guid: b5372b645aaa99344ab305a95dd2ecd0,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 1267809143}
+    - target: {fileID: 17604479476736198, guid: b5372b645aaa99344ab305a95dd2ecd0,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17604479476736201, guid: b5372b645aaa99344ab305a95dd2ecd0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 6327563067011552564, guid: b5372b645aaa99344ab305a95dd2ecd0,
         type: 3}
       propertyPath: m_Mesh
@@ -12891,7 +13622,10 @@ PrefabInstance:
       propertyPath: OnTargetFound.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 17604479476736197, guid: b5372b645aaa99344ab305a95dd2ecd0, type: 3}
+    - {fileID: 17604479476736194, guid: b5372b645aaa99344ab305a95dd2ecd0, type: 3}
+    - {fileID: 17604479476736196, guid: b5372b645aaa99344ab305a95dd2ecd0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b5372b645aaa99344ab305a95dd2ecd0, type: 3}
 --- !u!4 &1267809140 stripped
 Transform:
@@ -12899,6 +13633,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1267809139}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1267809141 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 17604479476736195, guid: b5372b645aaa99344ab305a95dd2ecd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1267809139}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1267809142 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 17604479476736198, guid: b5372b645aaa99344ab305a95dd2ecd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1267809139}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267809141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1267809143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267809141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 1267809142}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t4_bis
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 1267809142}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &1270411109
 GameObject:
   m_ObjectHideFlags: 0
@@ -14992,12 +15763,30 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 1329713063}
+    - target: {fileID: 6869624473156723811, guid: db82263c98cdd864dbb7299b31f397a5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6869624473156723836, guid: db82263c98cdd864dbb7299b31f397a5,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 1399544578}
+    - target: {fileID: 6869624473156723836, guid: db82263c98cdd864dbb7299b31f397a5,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6869624473156723839, guid: db82263c98cdd864dbb7299b31f397a5,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2078511612}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6869624473156723839, guid: db82263c98cdd864dbb7299b31f397a5, type: 3}
+    - {fileID: 6869624473156723832, guid: db82263c98cdd864dbb7299b31f397a5, type: 3}
+    - {fileID: 6869624473156723838, guid: db82263c98cdd864dbb7299b31f397a5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: db82263c98cdd864dbb7299b31f397a5, type: 3}
 --- !u!4 &1399544575 stripped
 Transform:
@@ -15005,6 +15794,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1399544574}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1399544576 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6869624473156723833, guid: db82263c98cdd864dbb7299b31f397a5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1399544574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1399544577 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6869624473156723836, guid: db82263c98cdd864dbb7299b31f397a5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1399544574}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399544576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1399544578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399544576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 1399544577}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t8
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 1399544577}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &1410944743
 GameObject:
   m_ObjectHideFlags: 0
@@ -15648,12 +16474,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5319878937261781003, guid: d83a0277e2e09104b9ec499656ed52fe,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319878937261781012, guid: d83a0277e2e09104b9ec499656ed52fe,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 1479398694}
+    - target: {fileID: 5319878937261781012, guid: d83a0277e2e09104b9ec499656ed52fe,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5319878937261781015, guid: d83a0277e2e09104b9ec499656ed52fe,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 776944353}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5319878937261781015, guid: d83a0277e2e09104b9ec499656ed52fe, type: 3}
+    - {fileID: 5319878937261781008, guid: d83a0277e2e09104b9ec499656ed52fe, type: 3}
+    - {fileID: 5319878937261781014, guid: d83a0277e2e09104b9ec499656ed52fe, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d83a0277e2e09104b9ec499656ed52fe, type: 3}
 --- !u!4 &1479398691 stripped
 Transform:
@@ -15661,6 +16505,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1479398690}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1479398692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5319878937261781009, guid: d83a0277e2e09104b9ec499656ed52fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 1479398690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1479398693 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5319878937261781012, guid: d83a0277e2e09104b9ec499656ed52fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 1479398690}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479398692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1479398694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479398692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 1479398693}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t2
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 1479398693}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &1496979351
 GameObject:
   m_ObjectHideFlags: 0
@@ -16682,7 +17563,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.65
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17318,6 +18199,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 863180767}
+    - target: {fileID: 1043971608323102124, guid: ee0279755fee3894d80da53473044990,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 1621463130}
+    - target: {fileID: 1043971608323102124, guid: ee0279755fee3894d80da53473044990,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1043971608323102127, guid: ee0279755fee3894d80da53473044990,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 6337360363936231761, guid: ee0279755fee3894d80da53473044990,
         type: 3}
       propertyPath: OnTargetFound.m_PersistentCalls.m_Calls.Array.size
@@ -17453,7 +18349,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 1682840276}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1043971608323102123, guid: ee0279755fee3894d80da53473044990, type: 3}
+    - {fileID: 1043971608323102120, guid: ee0279755fee3894d80da53473044990, type: 3}
+    - {fileID: 1043971608323102122, guid: ee0279755fee3894d80da53473044990, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ee0279755fee3894d80da53473044990, type: 3}
 --- !u!4 &1621463127 stripped
 Transform:
@@ -17461,6 +18360,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1621463126}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1621463128 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1043971608323102121, guid: ee0279755fee3894d80da53473044990,
+    type: 3}
+  m_PrefabInstance: {fileID: 1621463126}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1621463129 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1043971608323102124, guid: ee0279755fee3894d80da53473044990,
+    type: 3}
+  m_PrefabInstance: {fileID: 1621463126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621463128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1621463130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621463128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 1621463129}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t9
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 1621463129}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &1624471783
 GameObject:
   m_ObjectHideFlags: 0
@@ -21021,6 +21957,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 1970442699}
+    - target: {fileID: 1363031585071370851, guid: f7142b5b4461dc54aa6dcdc676e5df42,
+        type: 3}
+      propertyPath: mPreview
+      value: 
+      objectReference: {fileID: 2031344427}
+    - target: {fileID: 1363031585071370851, guid: f7142b5b4461dc54aa6dcdc676e5df42,
+        type: 3}
+      propertyPath: mTrackingOptimizationNeedsUpgrade
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363031585071370852, guid: f7142b5b4461dc54aa6dcdc676e5df42,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 3388752730125633074, guid: f7142b5b4461dc54aa6dcdc676e5df42,
         type: 3}
       propertyPath: m_Name
@@ -21131,7 +22082,10 @@ PrefabInstance:
       propertyPath: OnTargetFound.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1363031585071370848, guid: f7142b5b4461dc54aa6dcdc676e5df42, type: 3}
+    - {fileID: 1363031585071370863, guid: f7142b5b4461dc54aa6dcdc676e5df42, type: 3}
+    - {fileID: 1363031585071370849, guid: f7142b5b4461dc54aa6dcdc676e5df42, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f7142b5b4461dc54aa6dcdc676e5df42, type: 3}
 --- !u!4 &2031344424 stripped
 Transform:
@@ -21139,6 +22093,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2031344423}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2031344425 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1363031585071370862, guid: f7142b5b4461dc54aa6dcdc676e5df42,
+    type: 3}
+  m_PrefabInstance: {fileID: 2031344423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2031344426 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1363031585071370851, guid: f7142b5b4461dc54aa6dcdc676e5df42,
+    type: 3}
+  m_PrefabInstance: {fileID: 2031344423}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031344425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1631628248, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2031344427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031344425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 2031344426}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t3
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 2031344426}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!43 &2032314682
 Mesh:
   m_ObjectHideFlags: 0
