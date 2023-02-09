@@ -494,7 +494,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -519,7 +519,7 @@ MonoBehaviour:
   highlightColor: {r: 0.8396226, g: 0.67832774, b: 0, a: 0}
   leftArrowButton: {fileID: 162315887409755701}
   rightArrowButton: {fileID: 162315887429401803}
-  playerAvatar: {fileID: 162315887939082727}
+  playerAvatar: {fileID: 162315887552707392}
   avatars:
   - {fileID: 21300000, guid: 806b5221e1c4bd24c912183316e359dd, type: 3}
   - {fileID: 21300000, guid: 5eb3349145231524782edac72dd83db5, type: 3}

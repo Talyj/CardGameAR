@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
+
 public class PlayerItem : MonoBehaviourPunCallbacks
 {
     public Text playerName;
@@ -14,7 +15,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     public GameObject leftArrowButton;
     public GameObject rightArrowButton;
 
-    ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
+    public ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
     public Image playerAvatar;
     public Sprite[] avatars;
 
@@ -25,6 +26,10 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         backgroundImage = GetComponent<Image>();
     }
 
+    public Sprite GetSpritePlayer()
+    {
+        return playerAvatar.sprite;
+    }
 
     public void SetPlayerInfo(Player _player)
     {
@@ -42,7 +47,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 
     public void OnClickeLeftArrow()
     {
-        if((int)playerProperties["playerAvatar"] == 0)
+        if ((int)playerProperties["playerAvatar"] == 0)
         {
             playerProperties["playerAvatar"] = avatars.Length - 1;
         }
@@ -68,7 +73,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        if(player == targetPlayer)
+        if (player == targetPlayer)
         {
             UpdatePlayerItem(targetPlayer);
         }

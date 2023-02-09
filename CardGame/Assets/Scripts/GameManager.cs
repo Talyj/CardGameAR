@@ -11,9 +11,12 @@ using UnityEngine.UI;
 
 namespace Com.MyCompany.MyGame
 {
-    public class GameManager : MonoBehaviourPunCallbacks
+    public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         public static GameManager Instance;
+
+        public GameObject[] playerPrefabs;
+
         private enum gameState
         {
             //Draw a card
@@ -26,7 +29,7 @@ namespace Com.MyCompany.MyGame
 
         private float timeBetweenBoards = 2;
 
-        private int turn;
+        public int turn;
         private gameState state;
         private PlayerStat player1;
         private PlayerStat player2;
@@ -61,15 +64,24 @@ namespace Com.MyCompany.MyGame
         [SerializeField] private GameObject[] lifePlayer2Vue1;
         [SerializeField] private GameObject[] lifePlayer1Vue2;
         [SerializeField] private GameObject[] lifePlayer2Vue2;
-        [SerializeField] private TextMeshProUGUI vieJoueur1Vue1;
-        [SerializeField] private TextMeshProUGUI vieJoueur2Vue1;
-        [SerializeField] private TextMeshProUGUI vieJoueur1Vue2;
-        [SerializeField] private TextMeshProUGUI vieJoueur2Vue2;
+        [SerializeField] private Text vieJoueur1Vue1;
+        [SerializeField] private Text vieJoueur2Vue1;
+        [SerializeField] private Text vieJoueur1Vue2;
+        [SerializeField] private Text vieJoueur2Vue2;
         [SerializeField] private GameObject panelJoueur1;
         [SerializeField] private GameObject panelJoueur2;
 
+        //[0] = player 1, [1] = player2
+        [SerializeField] private Image[] numplayers;
+
+        //TODO might have to put that in GameManager
+        public List<int> _P1CardsOnField;
+        public List<int> _P2CardsOnField;
+
         private void Start()
         {
+            //var player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
+            //player.gameManager = this;
             #region game rules
             turn = 1;
             isPlaying = true;
@@ -79,9 +91,54 @@ namespace Com.MyCompany.MyGame
             oldCardNumber = 0;
             isTargetFound = false;
             #endregion
+            if (PhotonNetwork.IsMasterClient)
+            {
+
+                #region playerInstance
+                //player1 = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
+                //player2 = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
+                //player1.gameManager = this;
+                //player2.gameManager = this;
+                #endregion
+                //foreach (var player in PhotonNetwork.PlayerList)
+                //{
+                //    if (player.IsMasterClient)
+                //    {
+                //        player1.playerId = player.UserId;
+                //    }
+                //    else
+                //    {
+                //        player2.playerId = player.UserId;
+                //    }
+                //}
+                foreach(var play in FindObjectsOfType<PlayerStat>())
+                {
+                    if (play.GetComponent<PhotonView>().IsMine)
+                    {
+                        player1 = play;                        
+                    }
+                    else
+                    {
+                        player2 = play;
+                    }
+                }
+            }
         }
 
         void Update()
+        {
+            UIUpdate();
+            if (isPlaying && PhotonNetwork.IsMasterClient)
+            {
+                MainGame();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+        }
+
+        private void UIUpdate()
         {
             turnNumber.text = turn.ToString();
 
@@ -152,50 +209,57 @@ namespace Com.MyCompany.MyGame
                     lifePlayer2Vue2[9].SetActive(true);
                 }
             }
-
-
-            if (isPlaying)
-            {
-                MainGame();
-            }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Application.Quit();
-            }
-
         }
 
         #region game rules
         private void MainGame()
         {
-            if (first)
-            {
-                player1 = new PlayerStat(100);
-                player2 = new PlayerStat(100);
-                first = false;
-            }
             if (SceneManager.GetActiveScene().name == "Game")
             {
-                if (turn % 2 == 0)
+                //if (turn % 2 == 0)
+                //{
+                //    //Tour 2 P2
+                //    //panelJoueur1.SetActive(false);
+                //    //panelJoueur2.SetActive(true);
+                //    GameLoop(player2, player1);
+                //}
+                //else
+                //{
+                //    //Tour 1 P1
+                //    //panelJoueur1.SetActive(true);
+                //    //panelJoueur2.SetActive(false);
+                //    GameLoop(player1, player2);
+                //}
+                if (PhotonNetwork.IsMasterClient)
                 {
-                    //Tour 2 P2
-                    panelJoueur1.SetActive(false);
-                    panelJoueur2.SetActive(true);
-                    GameLoop(player2, player1);
+                    GameLoop();
+                    CheckVictory(player1, player2);
                 }
-                else
-                {
-                    //Tour 1 P1
-                    panelJoueur1.SetActive(true);
-                    panelJoueur2.SetActive(false);
-                    GameLoop(player1, player2);
-                }
-                CheckVictory(player1, player2);
             }
         }
-
-        private void GameLoop(PlayerStat playerTurn, PlayerStat otherPlayer)
+        //private void GameLoop(PlayerStat playerTurn, PlayerStat otherPlayer)
+        private void GameLoop()
         {
+            PlayerStat playerTurn = null;
+            PlayerStat otherPlayer = null;
+            List<int> cardOnFieldPTurn = new List<int>();
+            List<int> cardOnFieldOPTurn = new List<int>();
+            if (turn % 2 == 0)
+            {
+                //Tour 2 P2
+                playerTurn = player2;
+                //cardOnFieldPTurn = _P2CardsOnField;
+                otherPlayer = player1;
+                //cardOnFieldOPTurn = _P1CardsOnField;
+            }
+            else
+            {
+                //Tour 1 P1
+                playerTurn = player1;
+                //cardOnFieldPTurn = _P1CardsOnField;
+                otherPlayer = player2;
+                //cardOnFieldOPTurn = _P2CardsOnField;
+            }
             //If otherPlayer block the commands 
             switch (state)
             {
@@ -218,29 +282,29 @@ namespace Com.MyCompany.MyGame
                 case gameState.mainPhase:
                     {
                         playText.SetActive(true);
-                        if (isTargetFound)
-                        {
-                            //playerTurn._cardsOnField = new List<Mobs>();
-                            //isTargetFound = false;
-                            //var cards = FindObjectsOfType<DefaultObserverEventHandler>();
-                            //foreach (var c in cards)
-                            //{
-                            //    if (isTrackingMarker(c.name))
-                            //    {
-                            //        var card = c.GetComponentInChildren<Mobs>();
-                            //        playerTurn.SetCardsOnField(card);
+                        //if (isTargetFound)
+                        //{
+                        //    cardOnFieldPTurn = new List<int>();
+                        //    isTargetFound = false;
+                        //    var cards = FindObjectsOfType<DefaultObserverEventHandler>();
+                        //    foreach (var c in cards)
+                        //    {
+                        //        if (isTrackingMarker(c.name))
+                        //        {
+                        //            var card = c.GetComponentInChildren<Mobs>();
+                        //            SetCardsOnField(card, playerTurn);
 
-                            //        if (card.CompareTag("tajma") && !card.isUsed)
-                            //        {
-                            //            playerTurn.SetHealth(playerTurn.GetHealth() + card.damage);
-                            //            card.isUsed = true;
-                            //        }
-                            //    }
-                            //}
+                        //            if (card.CompareTag("tajma") && !card.isUsed)
+                        //            {
+                        //                playerTurn.SetHealth(playerTurn.GetHealth() + card.damage);
+                        //                card.isUsed = true;
+                        //            }
+                        //        }
+                        //    }
 
-                            ChangePhase();
-                            playText.SetActive(false);
-                        }
+                        //    ChangePhase();
+                        //    playText.SetActive(false);
+                        //}
                         break;
                     }
                 case gameState.battlePhase:
@@ -305,6 +369,30 @@ namespace Com.MyCompany.MyGame
                         break;
                     }
             }
+            if (_P2CardsOnField.Count > 0 || _P1CardsOnField.Count > 0)
+            {
+                if (turn % 2 == 0)
+                {
+                    //Tour 2 P2
+                    _P2CardsOnField = cardOnFieldPTurn;
+                    _P1CardsOnField = cardOnFieldOPTurn;
+                }
+                else
+                {
+                    //Tour 1 P1
+                    _P1CardsOnField = cardOnFieldPTurn;
+                    _P2CardsOnField = cardOnFieldOPTurn;
+                }
+            }
+        }
+
+        public void SetCardsOnField(Mobs monster, List<int> cardOnFildCP)
+        {
+            if (cardOnFildCP.Count > 3)
+            {
+                //No more space
+            }
+            cardOnFildCP.Add(monster.idMonster);
         }
 
         private bool isTrackingMarker(string imageTargetName)
@@ -402,137 +490,67 @@ namespace Com.MyCompany.MyGame
 
         public void ChangePhase()
         {
-            ResetUI();
-            switch (state)
+            if (PhotonNetwork.IsMasterClient)
             {
-                case gameState.drawPhase:
-                    {
-                        state = gameState.mainPhase;
-                        StartCoroutine(ChangeBoard(mainBoard, drawBoard, battleBoard));
-                        break;
-                    }
-                case gameState.mainPhase:
-                    {
-                        state = gameState.battlePhase;
-                        StartCoroutine(ChangeBoard(battleBoard, drawBoard, mainBoard));
-                        break;
-                    }
-                case gameState.battlePhase:
-                    {
-                        state = gameState.drawPhase;
-                        StartCoroutine(ChangeBoard(drawBoard, mainBoard, battleBoard));
-                        turn++;
-                        if (turn % 2 == 0)
+                ResetUI();
+                switch (state)
+                {
+                    case gameState.drawPhase:
                         {
-                            turnP2.SetActive(true);
+                            state = gameState.mainPhase;
+                            StartCoroutine(ChangeBoard(mainBoard, drawBoard, battleBoard));
+                            break;
                         }
-                        else
+                    case gameState.mainPhase:
                         {
-                            turnP1.SetActive(true);
+                            state = gameState.battlePhase;
+                            StartCoroutine(ChangeBoard(battleBoard, drawBoard, mainBoard));
+                            break;
                         }
-                        break;
-                    }
+                    case gameState.battlePhase:
+                        {
+                            state = gameState.drawPhase;
+                            StartCoroutine(ChangeBoard(drawBoard, mainBoard, battleBoard));
+                            photonView.RPC("SyncValues", RpcTarget.OthersBuffered);
+                            if (turn % 2 == 0)
+                            {
+                                turnP2.SetActive(true);
+                            }
+                            else
+                            {
+                                turnP1.SetActive(true);
+                            }
+                            break;
+                        }
+                }
             }
+        }
+
+        [PunRPC]
+        public void SyncValues()
+        {
+            turn += 1;
         }
 
         public void ReturnMenu()
         {
             SceneManager.LoadScene("Launcher");
         }
-        #endregion
 
-        #region PUN
-
-        [SerializeField] private Text roomName;
-        [SerializeField] private GameObject playerListPrefab;
-        [SerializeField] private Transform playerListContent;
-
-
-
-        public override void OnLeftRoom()
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            SceneManager.LoadScene(0);
-        }
-
-        public void LeaveRoom()
-        {
-            PhotonNetwork.LeaveRoom();
-        }
-
-        void LoadArena()
-        {
-            if (!PhotonNetwork.IsMasterClient)
+            if (stream.IsWriting)
             {
-                Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
-                return;
-            }
-            Debug.LogFormat("PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
-            PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
-        }
-
-        public override void OnPlayerEnteredRoom(Player other)
-        {
-            Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-
-                LoadArena();
-            }
-
-
-        }
-
-        public override void OnPlayerLeftRoom(Player other)
-        {
-            Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-
-                LoadArena();
-            }
-
-            #endregion
-        }
-
-        public void CreateRoom()
-        {
-            if (string.IsNullOrEmpty(roomName.text))
-            {
-                PhotonNetwork.CreateRoom(PhotonNetwork.NickName + " room");
+                stream.SendNext(turn);
+                stream.SendNext((int)state);
             }
             else
             {
-                PhotonNetwork.CreateRoom(roomName.text);
-            }
-            //if (string.IsNullOrEmpty(playerName.text))
-            //{
-            //    PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
-            //}
-            //else
-            //{
-            //    PhotonNetwork.NickName = playerName.text;
-            //}
-            //Debug.Log(PhotonNetwork.NickName);
-            Player[] players = PhotonNetwork.PlayerList;
-
-        }
-
-        public void JoinRoom(RoomInfo info)
-        {
-            PhotonNetwork.JoinRoom(info.Name);
-
-            Player[] players = PhotonNetwork.PlayerList;
-
-            for (int i = 0; i < players.Length; i++)
-            {
-                Instantiate(playerListPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
+                turn = (int)stream.ReceiveNext();
+                state = (gameState)stream.ReceiveNext();
             }
         }
+        #endregion
     }
-
 }
 
