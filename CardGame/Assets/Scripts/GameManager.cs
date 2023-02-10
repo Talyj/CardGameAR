@@ -89,24 +89,31 @@ namespace Com.MyCompany.MyGame
         {
             var pler = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
             pler.gameManager = this;
-            foreach(var player in PhotonNetwork.PlayerList)
+            var valueAttribued = false;
+
+            if (PhotonNetwork.PlayerList.Length >= 1)
             {
-                if (photonView.IsMine)
+                for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
                 {
-                    if (pler.GetComponentInChildren<Image>().CompareTag("tete"))
+                    if (photonView.IsMine)
                     {
-                        pler.GetComponentInChildren<Image>().sprite = avatars[(int)player.CustomProperties["playerAvatar"]];
-                    }
-                }
-                else
-                {
-                    if (pler.GetComponentInChildren<Image>().CompareTag("teteE"))
-                    {
-                        pler.GetComponentInChildren<Image>().sprite = avatars[(int)player.CustomProperties["playerAvatar"]];
+                        var otherPlayer = i == 1 ? 0 : 1;
+                        var Images = pler.GetComponentsInChildren<Image>();
+                        foreach (var img in Images)
+                        {
+                            if (img.CompareTag("tete"))
+                            {
+                                img.sprite = avatars[(int)PhotonNetwork.PlayerList[i].CustomProperties["playerAvatar"]];
+                            }
+                            if (img.CompareTag("teteE"))
+                            {
+                                img.sprite = avatars[(int)PhotonNetwork.PlayerList[otherPlayer].CustomProperties["playerAvatar"]];
+                            }
+                        }
                     }
                 }
             }
-
+            //StartCoroutine(InstanceImagePlayer());
         }
 
         private void Start()
@@ -138,6 +145,56 @@ namespace Com.MyCompany.MyGame
                 Application.Quit();
             }
         }
+        
+        public IEnumerator InstanceImagePlayer()
+        {
+            var pler = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
+            pler.gameManager = this;
+            var valueAttribued = false;
+
+            while (!valueAttribued)
+            {
+                if(PhotonNetwork.PlayerList.Length >= 2 && PhotonNetwork.IsMasterClient)
+                {
+                    for(int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+                    {
+                        if (photonView.IsMine)
+                        {
+                            var otherPlayer = i == 1 ? 0 : 1;
+                            var Images = pler.GetComponentsInChildren<Image>();
+                            foreach(var img in Images)
+                            {
+                                if (img.CompareTag("tete"))
+                                {
+                                    img.sprite = avatars[(int)PhotonNetwork.PlayerList[i].CustomProperties["playerAvatar"]];
+                                }
+                                if (img.CompareTag("teteE"))
+                                {
+                                    img.sprite = avatars[(int)PhotonNetwork.PlayerList[otherPlayer].CustomProperties["playerAvatar"]];
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var otherPlayer = i == 1 ? 0 : 1;
+                            var Images = pler.GetComponentsInChildren<Image>();
+                            foreach (var img in Images)
+                            {
+                                if (img.CompareTag("tete"))
+                                {
+                                    img.sprite = avatars[(int)PhotonNetwork.PlayerList[i].CustomProperties["playerAvatar"]];
+                                }
+                                if (img.CompareTag("teteE"))
+                                {
+                                    img.sprite = avatars[(int)PhotonNetwork.PlayerList[otherPlayer].CustomProperties["playerAvatar"]];
+                                }
+                            }
+                        }
+                    }
+                }
+                yield return new WaitForSeconds(1);
+            }
+        }
 
         public IEnumerator InstancePlayers()
         {
@@ -158,7 +215,7 @@ namespace Com.MyCompany.MyGame
                     }
                     isPlaying = true;
                 }
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(1);
             }
         }
 
@@ -257,8 +314,8 @@ namespace Com.MyCompany.MyGame
                 if (PhotonNetwork.IsMasterClient)
                 {
                     GameLoop();
-                    CheckVictory(player1, player2);
                 }
+                CheckVictory(player1, player2);
             }
         }
         //private void GameLoop(PlayerStat playerTurn, PlayerStat otherPlayer)

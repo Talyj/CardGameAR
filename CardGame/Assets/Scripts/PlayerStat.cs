@@ -39,7 +39,8 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             playerView.SetActive(true);
-        }
+        }else playerView.SetActive(false);
+
         if (PhotonNetwork.IsMasterClient)
         {
             playerId = 1;
