@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.Animations;
 using TMPro;
  using UnityEngine.UI;
+using Photon.Pun;
 
-
-public class Mobs : MonoBehaviour
+public class Mobs : MonoBehaviourPun, IPunObservable
 {
+    public int idMonster;
     public float life;
     public float maxLife;
     public float damage;
@@ -20,6 +21,8 @@ public class Mobs : MonoBehaviour
     [SerializeField] private TextMeshProUGUI vieMob;
     [SerializeField] private Image vieCurrent;
     [SerializeField] private GameObject canvas;
+
+    public int joueur;
 
     public void Start()
     {
@@ -132,4 +135,17 @@ public class Mobs : MonoBehaviour
         canvas.SetActive(false);
     }
 
+    void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(life);
+            stream.SendNext(joueur);
+        }
+        else
+        {
+            life = (float)stream.ReceiveNext();
+            joueur = (int)stream.ReceiveNext();
+        }
+    }
 }
