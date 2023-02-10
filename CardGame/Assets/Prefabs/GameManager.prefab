@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3180833456670932621}
   - component: {fileID: 6917218079289173647}
+  - component: {fileID: 7160931015300882317}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,15 +45,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5bdb17173553924e85e71d66cd52c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefabs: []
+  turn: 0
   drawBoard: {fileID: 0}
   mainBoard: {fileID: 0}
   battleBoard: {fileID: 0}
-  endBoard: {fileID: 0}
   turnP1: {fileID: 0}
   turnP2: {fileID: 0}
-  victoryP1: {fileID: 0}
-  victoryP2: {fileID: 0}
   drawText: {fileID: 0}
   playText: {fileID: 0}
   battleText: {fileID: 0}
-  endText: {fileID: 0}
+  turnNumber: {fileID: 0}
+  victoryPanelP1: {fileID: 0}
+  victoryPanelP2: {fileID: 0}
+  lifePlayer1Vue1: []
+  lifePlayer2Vue1: []
+  lifePlayer1Vue2: []
+  lifePlayer2Vue2: []
+  vieJoueur1Vue1: {fileID: 0}
+  vieJoueur2Vue1: {fileID: 0}
+  vieJoueur1Vue2: {fileID: 0}
+  vieJoueur2Vue2: {fileID: 0}
+  panelJoueur1: {fileID: 0}
+  panelJoueur2: {fileID: 0}
+  numplayers: []
+  _P1CardsOnField: 
+  _P2CardsOnField: 
+  playerPrefab: {fileID: 0}
+--- !u!114 &7160931015300882317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453032649546641465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 0
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0

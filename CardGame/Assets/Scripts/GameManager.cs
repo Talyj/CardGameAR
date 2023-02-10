@@ -78,13 +78,41 @@ namespace Com.MyCompany.MyGame
         public List<int> _P1CardsOnField;
         public List<int> _P2CardsOnField;
 
+        public GameObject playerPrefab;
+
+        //Same content as the one in PlayerItem
+        public Sprite[] avatars;
+
+
+        public void Awake()
+        {
+            var pler = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
+            pler.gameManager = this;
+            foreach(var player in PhotonNetwork.PlayerList)
+            {
+                if (photonView.IsMine)
+                {
+                    if (pler.GetComponentInChildren<Image>().CompareTag("tete"))
+                    {
+                        pler.GetComponentInChildren<Image>().sprite = avatars[(int)player.CustomProperties["playerAvatar"]];
+                    }
+                }
+                else
+                {
+                    if (pler.GetComponentInChildren<Image>().CompareTag("teteE"))
+                    {
+                        pler.GetComponentInChildren<Image>().sprite = avatars[(int)player.CustomProperties["playerAvatar"]];
+                    }
+                }
+            }
+
+        }
+
         private void Start()
         {
-            //var player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
-            //player.gameManager = this;
             #region game rules
             turn = 1;
-            isPlaying = true;
+            isPlaying = false;
             state = gameState.drawPhase;
             first = true;
             currentCardNumber = 0;
@@ -93,35 +121,7 @@ namespace Com.MyCompany.MyGame
             #endregion
             if (PhotonNetwork.IsMasterClient)
             {
-
-                #region playerInstance
-                //player1 = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
-                //player2 = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
-                //player1.gameManager = this;
-                //player2.gameManager = this;
-                #endregion
-                //foreach (var player in PhotonNetwork.PlayerList)
-                //{
-                //    if (player.IsMasterClient)
-                //    {
-                //        player1.playerId = player.UserId;
-                //    }
-                //    else
-                //    {
-                //        player2.playerId = player.UserId;
-                //    }
-                //}
-                foreach(var play in FindObjectsOfType<PlayerStat>())
-                {
-                    if (play.GetComponent<PhotonView>().IsMine)
-                    {
-                        player1 = play;                        
-                    }
-                    else
-                    {
-                        player2 = play;
-                    }
-                }
+                StartCoroutine(InstancePlayers());
             }
         }
 
@@ -135,6 +135,29 @@ namespace Com.MyCompany.MyGame
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Application.Quit();
+            }
+        }
+
+        public IEnumerator InstancePlayers()
+        {
+            while(!isPlaying)
+            {
+                if(PhotonNetwork.PlayerList.Length >= 2)
+                {
+                    foreach (var play in FindObjectsOfType<PlayerStat>())
+                    {
+                        if (play.GetComponent<PhotonView>().IsMine)
+                        {
+                            player1 = play;
+                        }
+                        else
+                        {
+                            player2 = play;
+                        }
+                    }
+                    isPlaying = true;
+                }
+                yield return new WaitForSeconds(5);
             }
         }
 
@@ -490,46 +513,47 @@ namespace Com.MyCompany.MyGame
 
         public void ChangePhase()
         {
-            if (PhotonNetwork.IsMasterClient)
+            //if (PhotonNetwork.IsMasterClient)
+            //{
+            ResetUI();
+            switch (state)
             {
-                ResetUI();
-                switch (state)
-                {
-                    case gameState.drawPhase:
+                case gameState.drawPhase:
+                    {
+                        state = gameState.mainPhase;
+                        StartCoroutine(ChangeBoard(mainBoard, drawBoard, battleBoard));
+                        break;
+                    }
+                case gameState.mainPhase:
+                    {
+                        state = gameState.battlePhase;
+                        StartCoroutine(ChangeBoard(battleBoard, drawBoard, mainBoard));
+                        break;
+                    }
+                case gameState.battlePhase:
+                    {
+                        state = gameState.drawPhase;
+                        StartCoroutine(ChangeBoard(drawBoard, mainBoard, battleBoard));
+                        turn += 1;
+                        if (turn % 2 == 0)
                         {
-                            state = gameState.mainPhase;
-                            StartCoroutine(ChangeBoard(mainBoard, drawBoard, battleBoard));
-                            break;
+                            turnP2.SetActive(true);
                         }
-                    case gameState.mainPhase:
+                        else
                         {
-                            state = gameState.battlePhase;
-                            StartCoroutine(ChangeBoard(battleBoard, drawBoard, mainBoard));
-                            break;
+                            turnP1.SetActive(true);
                         }
-                    case gameState.battlePhase:
-                        {
-                            state = gameState.drawPhase;
-                            StartCoroutine(ChangeBoard(drawBoard, mainBoard, battleBoard));
-                            photonView.RPC("SyncValues", RpcTarget.OthersBuffered);
-                            if (turn % 2 == 0)
-                            {
-                                turnP2.SetActive(true);
-                            }
-                            else
-                            {
-                                turnP1.SetActive(true);
-                            }
-                            break;
-                        }
-                }
+                        break;
+                    }
             }
+            photonView.RPC("SyncValues", RpcTarget.All, new object[] { turn });
+            //}
         }
 
         [PunRPC]
-        public void SyncValues()
+        public void SyncValues(int turn)
         {
-            turn += 1;
+            this.turn = turn;
         }
 
         public void ReturnMenu()
