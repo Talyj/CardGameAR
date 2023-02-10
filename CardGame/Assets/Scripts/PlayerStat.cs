@@ -1,5 +1,6 @@
 ﻿using Com.MyCompany.MyGame;
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,10 @@ using UnityEngine.UI;
 public class PlayerStat : MonoBehaviourPun, IPunObservable
 {
     public GameManager gameManager;
-    public string playerId;
+    public int playerId;
+    public int photonId;
+    public GameObject playerView;
+    private GameObject changePhaseButton;
 
     private float _health;
     //TODO might have to put that in GameManager
@@ -31,15 +35,72 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable
 
     public void Start()
     {
-        
+        currentTurn = 1;
+        if (photonView.IsMine)
+        {
+            playerView.SetActive(true);
+        }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            playerId = 1;
+        }
+        else
+        {
+            playerId = 2;
+        }
+        StartCoroutine(GetChangePhaseButton());
     }
 
     public void Update()
     {
-        Debug.Log("tour : " + currentTurn);
-        if (photonView.IsMine)
+        if (changePhaseButton && gameManager)
         {
+            try
+            {
+                switch (playerId)
+                {
+                    case 1:
+                        if(gameManager.turn % 2 == 0)
+                        {
+                            changePhaseButton.SetActive(false);
+                        }
+                        else
+                        {
+                            changePhaseButton.SetActive(true);
+                        }
+                        break;
+                    case 2:
+                        if (gameManager.turn % 2 == 0)
+                        {
+                            changePhaseButton.SetActive(true);
+                        }
+                        else
+                        {
+                            changePhaseButton.SetActive(false);
+                        }
+                        break;
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                Debug.LogError("Aoe gros : " + e);
+            }
+        }
+    }
 
+    IEnumerator GetChangePhaseButton()
+    {
+        while(changePhaseButton == null)
+        {
+            var buttons = FindObjectsOfType<Button>();
+            foreach(var but in buttons)
+            {
+                if (but.CompareTag("changePhaseButton"))
+                {
+                    changePhaseButton = but.gameObject;
+                }
+            }
+            yield return new WaitForSeconds(5);
         }
     }
 

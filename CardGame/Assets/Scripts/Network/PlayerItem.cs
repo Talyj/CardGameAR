@@ -24,6 +24,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     public void Start()
     {
         backgroundImage = GetComponent<Image>();
+        playerProperties["playerAvatar"] = 0;
     }
 
     public Sprite GetSpritePlayer()
@@ -79,7 +80,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         }
     }
 
-    private void UpdatePlayerItem(Player player)
+    public void UpdatePlayerItem(Player player)
     {
         if (player.CustomProperties.ContainsKey("playerAvatar"))
         {
