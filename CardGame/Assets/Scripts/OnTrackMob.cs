@@ -11,9 +11,9 @@ public class OnTrackMob : MonoBehaviour
         
     }
 
-    void Tracked()
+    public void Tracked()
     {
-        
+        Debug.Log("tracks");
     }
     // Update is called once per frame
     void Update()
