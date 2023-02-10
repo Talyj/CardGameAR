@@ -7,7 +7,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-//using Vuforia;
+using Vuforia;
+using Image = UnityEngine.UI.Image;
 
 namespace Com.MyCompany.MyGame
 {
@@ -305,29 +306,29 @@ namespace Com.MyCompany.MyGame
                 case gameState.mainPhase:
                     {
                         playText.SetActive(true);
-                        //if (isTargetFound)
-                        //{
-                        //    cardOnFieldPTurn = new List<int>();
-                        //    isTargetFound = false;
-                        //    var cards = FindObjectsOfType<DefaultObserverEventHandler>();
-                        //    foreach (var c in cards)
-                        //    {
-                        //        if (isTrackingMarker(c.name))
-                        //        {
-                        //            var card = c.GetComponentInChildren<Mobs>();
-                        //            SetCardsOnField(card, playerTurn);
+                        if (isTargetFound)
+                        {
+                            cardOnFieldPTurn = new List<int>();
+                            isTargetFound = false;
+                            var cards = FindObjectsOfType<DefaultObserverEventHandler>();
+                            foreach (var c in cards)
+                            {
+                                if (isTrackingMarker(c.name))
+                                {
+                                    var card = c.GetComponentInChildren<Mobs>();
+                                    //SetCardsOnField(card, playerTurn);
 
-                        //            if (card.CompareTag("tajma") && !card.isUsed)
-                        //            {
-                        //                playerTurn.SetHealth(playerTurn.GetHealth() + card.damage);
-                        //                card.isUsed = true;
-                        //            }
-                        //        }
-                        //    }
+                                    if (card.CompareTag("tajma") && !card.isUsed)
+                                    {
+                                        playerTurn.SetHealth(playerTurn.GetHealth() + card.damage);
+                                        card.isUsed = true;
+                                    }
+                                }
+                            }
 
-                        //    ChangePhase();
-                        //    playText.SetActive(false);
-                        //}
+                            ChangePhase();
+                            playText.SetActive(false);
+                        }
                         break;
                     }
                 case gameState.battlePhase:
