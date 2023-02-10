@@ -316,7 +316,7 @@ namespace Com.MyCompany.MyGame
                                 if (isTrackingMarker(c.name))
                                 {
                                     var card = c.GetComponentInChildren<Mobs>();
-                                    //SetCardsOnField(card, playerTurn);
+                                    SetCardsOnField(card, _P1CardsOnField);
 
                                     if (card.CompareTag("tajma") && !card.isUsed)
                                     {
@@ -412,11 +412,10 @@ namespace Com.MyCompany.MyGame
 
         public void SetCardsOnField(Mobs monster, List<int> cardOnFildCP)
         {
-            if (cardOnFildCP.Count > 3)
+            if (cardOnFildCP.Count < 3)
             {
-                //No more space
+                cardOnFildCP.Add(monster.idMonster);
             }
-            cardOnFildCP.Add(monster.idMonster);
         }
 
         private bool isTrackingMarker(string imageTargetName)
