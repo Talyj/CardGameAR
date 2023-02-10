@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: VuforiaConfiguration
   m_EditorClassIdentifier: 
   vuforia:
-    vuforiaLicenseKey: 
-    ufoLicenseKey: QVFaSHRkVC8vLy8vQUFBQUtLZ2RaV0hzVVVWdG53TDBZWkl5WjJkOGFZV211VS9adjBCeExqNjk1UlN4TFJnTnZJUEx3VDBnUmFyMzJvWDdnYzBocy9NUnRZTzcxVWExUU1QemFMQnJtQ2I5NVk1Qk1XYlhhOGhFZmcwRkxLUE1oSHZ0bThzbE9HVFhNeUtYM0xZRWJjTmdsL29oTVRyeTZoS0RmclBoU1FpTHJzVit0WGdMWkkxY3FpeWlZZkZaMHN0WTRCRmUwcTFKWGcrdzlUVDBCLzVsaE5MU0xmUFFDZm1TcjdyVUxqYTFMZnJPMjBvUWJMd0srVnVCTVhXbzRJNHJkc0lXcndVZi8ycEp6eC82RFNPNnFGU0ttOXRjNEd6UnpLY29LUXZjNkgvb05xNHFGc1NSNkFrbFBkTERYR3NocmdHMlIvQllzUzR6VlpnT3NLQlB2cEVVQlNBS1ZJajhSdmF6aENGRjdkK0Y1Q3JpYzllYVl3RUU=
+    vuforiaLicenseKey: AdSf/oT/////AAABmRR2P4ddTEzWvtdP42kvEuJYgXUlpnPQcDe6+H/WNHpQtwk77Pd2V3RT2CcQ3ehALWZOOBwtDI1Ew4egHlzKOqltGctOOSBwkhagZwLS8AwHOhXn3zAi4vHsVnGl+0P27R1VtPnJ+9Xfvr2k8qMjBmSS/fDYJDa1gosY26Xv1arXz84sjE6uj17eBh4lBaaNt8fgaH6xuERnRyV478n0kVM3y4y2PlZlYFDh9wdGd+TBkpfmXwTMAtLijC6yd2j9mvGxu3SCjdtRrmQNuJ2WvcS+opWnhy6kRGjAg4Qj2V3GMjC54p3Abkzab2v/OAAI8WADkYmyngyBOJI41FrwpJhbngyMhDLQ11UaF2Xtiywe
+    ufoLicenseKey: QVhvcUwzYi8vLy8vQUFBQUtIempEc2VMeWtGcW9jUitxd2E5V2lzWm5VNHM2K0ZaY05sQVBJbStDZnJ4ajhTRUpFRmpibHRrNWY4TEc5OXlFc24wT2VtQ3BLcmV5ODd4enpXNWpPNDRIUUhMV01IYTFJQU9LZ0JaU3BlcUJuTWg5c2hVc3pnOTd5c0pvbUNMZnRFNHcrU1VTQStZMVR1b1Bpbjh1cHdOVzJYUWNjaERRMTBWNGRFUEpuQ2xlV0NEcGZNMFRnS0V4Unh2NFFFZ3h2UWxGK2dHNGhtSzcwU1Nnc1ZlOVJNc0QzbitXWklrWWNwRU00ZFlPbCtjRnM0dmk5OGtHdGNuNzRDUXhBNFFFMDRZVGRKZHo3anp3SW9iZUJKQUl0dHE3elpJWUE1R1VBb1U3T2VDdnRoMElqdHJMRk1DaWRQNGxLbS85YWg3R1E0Vlp0YVYrbEdBbENoQjdVazBrdHY2RUlYN0N4STlVUUFTMXRPd0xlTWc=
     delayedInitialization: 0
-    cameraFocusModeSetting: 2
+    cameraFocusModeSetting: 0
     cameraDeviceModeSetting: -1
     maxSimultaneousImageTargets: 4
     virtualSceneScaleFactor: 1
-    modelTargetRecoWhileExtendedTracked: 1
-    shareRecordingsInITunes: 1
+    modelTargetRecoWhileExtendedTracked: 0
+    shareRecordingsInITunes: 0
     logLevel: 0
     version: 10.11.3
-    eulaAcceptedVersions: '{"Values":["","0.0","10.3","10.5","10.2","10.4","10.11","10.10"]}'
+    eulaAcceptedVersions: '{"Values":["","10.2","0.0","10.3","10.4","10.5","10.11","10.13"]}'
   database:
     disableModelExtraction: 1
   shaders:
@@ -45,7 +45,7 @@ MonoBehaviour:
     thirdPartyARCoreClientDetected: 0
   playmode:
     mSequencePath: Assets/SamplesResources/Recordings/area_target.mp4
-    playModeType: 2
+    playModeType: 0
   webcam:
     renderTextureLayer: 30
   packageInformation:
