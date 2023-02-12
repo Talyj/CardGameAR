@@ -57,6 +57,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
             playerProperties["playerAvatar"] = (int)playerProperties["playerAvatar"] - 1;
         }
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
+        Debug.Log("left : " + (int)playerProperties["playerAvatar"]);
     }
 
     public void OnClickeRightArrow()
@@ -70,6 +71,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
             playerProperties["playerAvatar"] = (int)playerProperties["playerAvatar"] + 1;
         }
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
+        Debug.Log("right : " +(int)playerProperties["playerAvatar"]);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)

@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -36,6 +37,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CreateRoom(roomInputField.text, new RoomOptions() { MaxPlayers = 2, BroadcastPropsChangeToAll = true});
         }
+    }
+
+    public void OnClickBackToFirstMenu()
+    {
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("ConnectToServer");
     }
 
     public override void OnJoinedRoom()
