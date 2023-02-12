@@ -151,8 +151,21 @@ MonoBehaviour:
   playerId: 0
   photonId: 0
   playerView: {fileID: 7830367597498435018}
-  _cardsOnField: []
   currentTurn: 0
+  avatars:
+  - {fileID: 21300000, guid: 806b5221e1c4bd24c912183316e359dd, type: 3}
+  - {fileID: 21300000, guid: 5eb3349145231524782edac72dd83db5, type: 3}
+  - {fileID: 21300000, guid: d9d14b262348a1641afe800c62b927ed, type: 3}
+  - {fileID: 21300000, guid: eafd182baf40885449bb780344d48d48, type: 3}
+  - {fileID: 21300000, guid: 40d4cb685e2ee444e8154cb00c0cac33, type: 3}
+  - {fileID: 21300000, guid: a7882d6560609ed47a2ae3b3fce0067e, type: 3}
+  - {fileID: 21300000, guid: e1b56d23f33066640bb925d94dee52bd, type: 3}
+  - {fileID: 21300000, guid: ac254a2aa0c5a524aab50df16428de36, type: 3}
+  - {fileID: 21300000, guid: 60959b7b988fd454dbac0f4d98779f02, type: 3}
+  - {fileID: 21300000, guid: 945f31821a852f6488b8ce4477839822, type: 3}
+  - {fileID: 21300000, guid: 708b207720a8a774f9b468370472182b, type: 3}
+  tete: {fileID: 7830367597178215557}
+  teteEnemy: {fileID: 7830367597853361296}
 --- !u!114 &3880910280855764594
 MonoBehaviour:
   m_ObjectHideFlags: 0

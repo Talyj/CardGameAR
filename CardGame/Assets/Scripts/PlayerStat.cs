@@ -16,22 +16,15 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable
 
     private float _health;
     //TODO might have to put that in GameManager
-    public List<Mobs> _cardsOnField;
-    private List<Mobs> _cardsInHand;
+    //public List<Mobs> _cardsOnField;
+    //private List<Mobs> _cardsInHand;
 
     [HideInInspector]public int currentTurn;
 
-    //player1
-    //public Image P1headImg;
-    //public Image P1numPlayer;
-    ////public Image[] life;
-    //public Text P1textLife;
-
-    ////player1
-    //public Image P2headImg;
-    //public Image P2numPlayer;
-    ////public Image[] life;
-    //public Text P2textLife;
+    private GameObject enemyPlayer = null;
+    public Sprite[] avatars;
+    public Image tete;
+    public Image teteEnemy;
 
     public void Start()
     {
@@ -50,9 +43,40 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable
             playerId = 2;
         }
         StartCoroutine(GetChangePhaseButton());
+        StartCoroutine(GetEnemyPlayer());
     }
 
     public void Update()
+    {
+        ChangePhaseButton();
+
+        if (photonView.IsMine)
+        {
+            tete.sprite = avatars[(int)gameObject.GetComponent<PhotonView>().Owner.CustomProperties["playerAvatar"]];
+            if (enemyPlayer)
+            {
+                teteEnemy.sprite = avatars[(int)enemyPlayer.GetComponent<PhotonView>().Owner.CustomProperties["playerAvatar"]];
+            }
+        }
+    }
+
+    public IEnumerator GetEnemyPlayer()
+    {
+        while(!enemyPlayer)
+        {
+            var players = FindObjectsOfType<PlayerStat>();
+            foreach(var play in players)
+            {
+                if (!play.GetComponent<PhotonView>().AmOwner)
+                {
+                    enemyPlayer = play.gameObject;
+                }
+            }
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    public void ChangePhaseButton()
     {
         if (changePhaseButton && gameManager)
         {
@@ -61,7 +85,7 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable
                 switch (playerId)
                 {
                     case 1:
-                        if(gameManager.turn % 2 == 0)
+                        if (gameManager.turn % 2 == 0)
                         {
                             changePhaseButton.SetActive(false);
                         }
@@ -180,7 +204,7 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable
 
     public PlayerStat()
     {
-        _cardsOnField = null;
+        //_cardsOnField = null;
         _health = 100;
     }
 
@@ -192,21 +216,6 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable
     public void SetHealth(float health)
     {
         _health = health;
-    }
-
-    public List<Mobs> GetCardsOnField()
-    {
-        return _cardsOnField;
-    }
-
-    public List<Mobs> GetCardsInHand()
-    {
-        return _cardsInHand;
-    }
-
-    public void SetCardsInHand(Mobs monster)
-    {
-        _cardsInHand.Add(monster);
     }
 
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

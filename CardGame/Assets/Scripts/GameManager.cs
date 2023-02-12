@@ -76,8 +76,8 @@ namespace Com.MyCompany.MyGame
         [SerializeField] private Image[] numplayers;
 
         //TODO might have to put that in GameManager
-        public List<int> _P1CardsOnField;
-        public List<int> _P2CardsOnField;
+        public List<Mobs> _P1CardsOnField;
+        public List<Mobs> _P2CardsOnField;
 
         public GameObject playerPrefab;
 
@@ -89,31 +89,6 @@ namespace Com.MyCompany.MyGame
         {
             var pler = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
             pler.gameManager = this;
-            var valueAttribued = false;
-
-            if (PhotonNetwork.PlayerList.Length >= 1)
-            {
-                for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-                {
-                    if (photonView.IsMine)
-                    {
-                        var otherPlayer = i == 1 ? 0 : 1;
-                        var Images = pler.GetComponentsInChildren<Image>();
-                        foreach (var img in Images)
-                        {
-                            if (img.CompareTag("tete"))
-                            {
-                                img.sprite = avatars[(int)PhotonNetwork.PlayerList[i].CustomProperties["playerAvatar"]];
-                            }
-                            if (img.CompareTag("teteE"))
-                            {
-                                img.sprite = avatars[(int)PhotonNetwork.PlayerList[otherPlayer].CustomProperties["playerAvatar"]];
-                            }
-                        }
-                    }
-                }
-            }
-            //StartCoroutine(InstanceImagePlayer());
         }
 
         private void Start()
@@ -144,57 +119,7 @@ namespace Com.MyCompany.MyGame
             {
                 Application.Quit();
             }
-        }
-        
-        public IEnumerator InstanceImagePlayer()
-        {
-            var pler = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<PlayerStat>();
-            pler.gameManager = this;
-            var valueAttribued = false;
-
-            while (!valueAttribued)
-            {
-                if(PhotonNetwork.PlayerList.Length >= 2 && PhotonNetwork.IsMasterClient)
-                {
-                    for(int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-                    {
-                        if (photonView.IsMine)
-                        {
-                            var otherPlayer = i == 1 ? 0 : 1;
-                            var Images = pler.GetComponentsInChildren<Image>();
-                            foreach(var img in Images)
-                            {
-                                if (img.CompareTag("tete"))
-                                {
-                                    img.sprite = avatars[(int)PhotonNetwork.PlayerList[i].CustomProperties["playerAvatar"]];
-                                }
-                                if (img.CompareTag("teteE"))
-                                {
-                                    img.sprite = avatars[(int)PhotonNetwork.PlayerList[otherPlayer].CustomProperties["playerAvatar"]];
-                                }
-                            }
-                        }
-                        else
-                        {
-                            var otherPlayer = i == 1 ? 0 : 1;
-                            var Images = pler.GetComponentsInChildren<Image>();
-                            foreach (var img in Images)
-                            {
-                                if (img.CompareTag("tete"))
-                                {
-                                    img.sprite = avatars[(int)PhotonNetwork.PlayerList[i].CustomProperties["playerAvatar"]];
-                                }
-                                if (img.CompareTag("teteE"))
-                                {
-                                    img.sprite = avatars[(int)PhotonNetwork.PlayerList[otherPlayer].CustomProperties["playerAvatar"]];
-                                }
-                            }
-                        }
-                    }
-                }
-                yield return new WaitForSeconds(1);
-            }
-        }
+        }              
 
         public IEnumerator InstancePlayers()
         {
@@ -223,73 +148,73 @@ namespace Com.MyCompany.MyGame
         {
             turnNumber.text = turn.ToString();
 
-            if (player1 != null && player2 != null)
-            {
-                vieJoueur1Vue1.text = player1.GetHealth().ToString() + "/100";
-                vieJoueur2Vue1.text = player2.GetHealth().ToString() + "/100";
-                vieJoueur1Vue2.text = player1.GetHealth().ToString() + "/100";
-                vieJoueur2Vue2.text = player2.GetHealth().ToString() + "/100";
+            //if (player1 != null && player2 != null)
+            //{
+            //    vieJoueur1Vue1.text = player1.GetHealth().ToString() + "/100";
+            //    vieJoueur2Vue1.text = player2.GetHealth().ToString() + "/100";
+            //    vieJoueur1Vue2.text = player1.GetHealth().ToString() + "/100";
+            //    vieJoueur2Vue2.text = player2.GetHealth().ToString() + "/100";
 
-                if (player1.GetHealth() <= 0)
-                {
-                    victoryPanelP2.SetActive(true);
-                }
+            //    if (player1.GetHealth() <= 0)
+            //    {
+            //        victoryPanelP2.SetActive(true);
+            //    }
 
-                if (player2.GetHealth() <= 0)
-                {
-                    victoryPanelP1.SetActive(true);
-                }
+            //    if (player2.GetHealth() <= 0)
+            //    {
+            //        victoryPanelP1.SetActive(true);
+            //    }
 
-                for (int i = 100; i > 0; i = i - 10)
-                {
-                    if (player1.GetHealth() < i && player1.GetHealth() >= (i - 10))
-                    {
-                        for (int j = (i / 10) - 1; j < 10; j++)
-                        {
-                            lifePlayer1Vue1[j].SetActive(false);
-                            lifePlayer1Vue2[j].SetActive(false);
-                        }
-                        lifePlayer1Vue1[(i / 10) - 1].SetActive(true);
-                        lifePlayer1Vue2[(i / 10) - 1].SetActive(true);
-                        for (int j = (i / 10) - 1; j > 0; j--)
-                        {
-                            lifePlayer1Vue1[j - 1].SetActive(true);
-                            lifePlayer1Vue2[j - 1].SetActive(true);
-                        }
-                    }
-                }
+            //    for (int i = 100; i > 0; i = i - 10)
+            //    {
+            //        if (player1.GetHealth() < i && player1.GetHealth() >= (i - 10))
+            //        {
+            //            for (int j = (i / 10) - 1; j < 10; j++)
+            //            {
+            //                lifePlayer1Vue1[j].SetActive(false);
+            //                lifePlayer1Vue2[j].SetActive(false);
+            //            }
+            //            lifePlayer1Vue1[(i / 10) - 1].SetActive(true);
+            //            lifePlayer1Vue2[(i / 10) - 1].SetActive(true);
+            //            for (int j = (i / 10) - 1; j > 0; j--)
+            //            {
+            //                lifePlayer1Vue1[j - 1].SetActive(true);
+            //                lifePlayer1Vue2[j - 1].SetActive(true);
+            //            }
+            //        }
+            //    }
 
-                for (int i = 100; i > 0; i = i - 10)
-                {
-                    if (player2.GetHealth() < i && player2.GetHealth() >= (i - 10))
-                    {
-                        for (int j = (i / 10) - 1; j < 10; j++)
-                        {
-                            lifePlayer2Vue1[j].SetActive(false);
-                            lifePlayer2Vue2[j].SetActive(false);
-                        }
-                        lifePlayer2Vue1[(i / 10) - 1].SetActive(true);
-                        lifePlayer2Vue2[(i / 10) - 1].SetActive(true);
-                        for (int j = (i / 10) - 1; j > 0; j--)
-                        {
-                            lifePlayer2Vue1[j - 1].SetActive(true);
-                            lifePlayer2Vue2[j - 1].SetActive(true);
-                        }
-                    }
-                }
+            //    for (int i = 100; i > 0; i = i - 10)
+            //    {
+            //        if (player2.GetHealth() < i && player2.GetHealth() >= (i - 10))
+            //        {
+            //            for (int j = (i / 10) - 1; j < 10; j++)
+            //            {
+            //                lifePlayer2Vue1[j].SetActive(false);
+            //                lifePlayer2Vue2[j].SetActive(false);
+            //            }
+            //            lifePlayer2Vue1[(i / 10) - 1].SetActive(true);
+            //            lifePlayer2Vue2[(i / 10) - 1].SetActive(true);
+            //            for (int j = (i / 10) - 1; j > 0; j--)
+            //            {
+            //                lifePlayer2Vue1[j - 1].SetActive(true);
+            //                lifePlayer2Vue2[j - 1].SetActive(true);
+            //            }
+            //        }
+            //    }
 
-                if (player1.GetHealth() >= 100)
-                {
-                    lifePlayer1Vue1[9].SetActive(true);
-                    lifePlayer1Vue2[9].SetActive(true);
-                }
+            //    if (player1.GetHealth() >= 100)
+            //    {
+            //        lifePlayer1Vue1[9].SetActive(true);
+            //        lifePlayer1Vue2[9].SetActive(true);
+            //    }
 
-                if (player2.GetHealth() >= 100)
-                {
-                    lifePlayer2Vue1[9].SetActive(true);
-                    lifePlayer2Vue2[9].SetActive(true);
-                }
-            }
+            //    if (player2.GetHealth() >= 100)
+            //    {
+            //        lifePlayer2Vue1[9].SetActive(true);
+            //        lifePlayer2Vue2[9].SetActive(true);
+            //    }
+            //}
         }
 
         #region game rules
@@ -297,25 +222,12 @@ namespace Com.MyCompany.MyGame
         {
             if (SceneManager.GetActiveScene().name == "Game")
             {
-                //if (turn % 2 == 0)
-                //{
-                //    //Tour 2 P2
-                //    //panelJoueur1.SetActive(false);
-                //    //panelJoueur2.SetActive(true);
-                //    GameLoop(player2, player1);
-                //}
-                //else
-                //{
-                //    //Tour 1 P1
-                //    //panelJoueur1.SetActive(true);
-                //    //panelJoueur2.SetActive(false);
-                //    GameLoop(player1, player2);
-                //}
                 if (PhotonNetwork.IsMasterClient)
                 {
                     GameLoop();
                 }
-                CheckVictory(player1, player2);
+
+                if(player1 && player2) CheckVictory(player1, player2);
             }
         }
         //private void GameLoop(PlayerStat playerTurn, PlayerStat otherPlayer)
@@ -323,23 +235,23 @@ namespace Com.MyCompany.MyGame
         {
             PlayerStat playerTurn = null;
             PlayerStat otherPlayer = null;
-            List<int> cardOnFieldPTurn = new List<int>();
-            List<int> cardOnFieldOPTurn = new List<int>();
+            List<Mobs> cardOnFieldPTurn = new List<Mobs>();
+            List<Mobs> cardOnFieldOPTurn = new List<Mobs>();
             if (turn % 2 == 0)
             {
                 //Tour 2 P2
                 playerTurn = player2;
-                //cardOnFieldPTurn = _P2CardsOnField;
+                cardOnFieldPTurn = _P2CardsOnField;
                 otherPlayer = player1;
-                //cardOnFieldOPTurn = _P1CardsOnField;
+                cardOnFieldOPTurn = _P1CardsOnField;
             }
             else
             {
                 //Tour 1 P1
                 playerTurn = player1;
-                //cardOnFieldPTurn = _P1CardsOnField;
+                cardOnFieldPTurn = _P1CardsOnField;
                 otherPlayer = player2;
-                //cardOnFieldOPTurn = _P2CardsOnField;
+                cardOnFieldOPTurn = _P2CardsOnField;
             }
             //If otherPlayer block the commands 
             switch (state)
@@ -365,7 +277,6 @@ namespace Com.MyCompany.MyGame
                         playText.SetActive(true);
                         if (isTargetFound)
                         {
-                            cardOnFieldPTurn = new List<int>();
                             isTargetFound = false;
                             var cards = FindObjectsOfType<DefaultObserverEventHandler>();
                             foreach (var c in cards)
@@ -373,7 +284,7 @@ namespace Com.MyCompany.MyGame
                                 if (isTrackingMarker(c.name))
                                 {
                                     var card = c.GetComponentInChildren<Mobs>();
-                                    SetCardsOnField(card, _P1CardsOnField);
+                                    cardOnFieldOPTurn = SetCardsOnField(card, cardOnFieldOPTurn);
 
                                     if (card.CompareTag("tajma") && !card.isUsed)
                                     {
@@ -398,9 +309,9 @@ namespace Com.MyCompany.MyGame
                         {
                             ChangePhase();
                         }
-                        if (playerTurn.GetCardsOnField().Count > 0)
+                        if (cardOnFieldPTurn.Count > 0)
                         {
-                            foreach (var c in playerTurn.GetCardsOnField())
+                            foreach (var c in _P1CardsOnField)
                             {
                                 if (c.CompareTag("dps"))
                                 {
@@ -415,15 +326,15 @@ namespace Com.MyCompany.MyGame
                                 }
                                 else if (c.CompareTag("ekey"))
                                 {
-                                    foreach (var ca in playerTurn.GetCardsOnField())
+                                    foreach (var ca in cardOnFieldPTurn)
                                     {
                                         ca.life += c.damage;
                                     }
                                 }
                             }
-                            if (otherPlayer.GetCardsOnField().Count > 0)
+                            if (cardOnFieldOPTurn.Count > 0)
                             {
-                                foreach (var c in otherPlayer.GetCardsOnField())
+                                foreach (var c in cardOnFieldOPTurn)
                                 {
                                     if (c.life < damageTurn)
                                     {
@@ -467,12 +378,13 @@ namespace Com.MyCompany.MyGame
             }
         }
 
-        public void SetCardsOnField(Mobs monster, List<int> cardOnFildCP)
+        public List<Mobs> SetCardsOnField(Mobs monster, List<Mobs> cardOnFieldCP)
         {
-            if (cardOnFildCP.Count < 3)
+            if (cardOnFieldCP.Count < 3)
             {
-                cardOnFildCP.Add(monster.idMonster);
+                cardOnFieldCP.Add(monster);
             }
+            return cardOnFieldCP;
         }
 
         private bool isTrackingMarker(string imageTargetName)
@@ -490,30 +402,6 @@ namespace Com.MyCompany.MyGame
             }
             return true;
 
-        }
-
-        private bool DrawCard(PlayerStat player, bool isFirstDraw = false)
-        {
-            try
-            {
-                if (isFirstDraw)
-                {
-                    for (var i = 0; i < 3; i++)
-                    {
-                        //MODIFY with the Mobs with the correct ID
-                        var cards = UnityEngine.Random.Range(0, 9);
-                        player.SetCardsInHand(new Mobs());
-                    }
-                    return true;
-                }
-                var card = UnityEngine.Random.Range(0, 9);
-                player.SetCardsInHand(new Mobs());
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-            return true;
         }
 
         private void ResetUI()
