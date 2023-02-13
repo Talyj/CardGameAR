@@ -94,6 +94,10 @@ GameObject:
   - component: {fileID: 8939091231180040165}
   - component: {fileID: 8939091231180040170}
   - component: {fileID: 8939091231180040171}
+  - component: {fileID: 432037282}
+  - component: {fileID: 432037285}
+  - component: {fileID: 432037288}
+  - component: {fileID: 432037291}
   m_Layer: 0
   m_Name: Card Soin 3
   m_TagString: Untagged
@@ -144,7 +148,7 @@ MonoBehaviour:
   mMotionHint: 1
   mTrackingOptimization: 0
   mTrackingOptimizationNeedsUpgrade: 0
-  mPreview: {fileID: 0}
+  mPreview: {fileID: 432037291}
 --- !u!114 &8939091231180040171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +193,82 @@ MonoBehaviour:
   OnTargetLost:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &432037282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8939091231180040175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 8939091231180040170}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t4
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 8939091231180040170}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
+--- !u!114 &432037285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8939091231180040175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 8939091231180040170}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t4
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 8939091231180040170}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
+--- !u!114 &432037288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8939091231180040175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 8939091231180040170}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t4
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 8939091231180040170}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
+--- !u!114 &432037291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8939091231180040175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1778676317, guid: 1e108ae5f2133934f948edded555f03e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mObserverBehaviour: {fileID: 8939091231180040170}
+  mHiddenRoot: {fileID: 0}
+  mTargetName: t4
+  mDatasetName: Vuforia/YGE.xml
+  mCastedBehaviour: {fileID: 8939091231180040170}
+  mMeshFilter: {fileID: 0}
+  mMeshRenderer: {fileID: 0}
 --- !u!1 &8939091232259758863
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +463,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4838871073663316156, guid: 8ec1071a53a6cbd4f8c83c43dfe41bf5,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4838871073663316156, guid: 8ec1071a53a6cbd4f8c83c43dfe41bf5,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4838871073663316156, guid: 8ec1071a53a6cbd4f8c83c43dfe41bf5,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4838871073663316156, guid: 8ec1071a53a6cbd4f8c83c43dfe41bf5,
         type: 3}
