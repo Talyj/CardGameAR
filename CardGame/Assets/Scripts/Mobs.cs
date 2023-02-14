@@ -96,6 +96,7 @@ public class Mobs : MonoBehaviourPun, IPunObservable
     private void Reset() {
         anim.SetBool("GetDamage", false);
         anim.SetBool("Attack", false);
+        anim.SetBool("Entry", false);
         anim.SetBool("Spawn", false);
     }
 
@@ -105,6 +106,11 @@ public class Mobs : MonoBehaviourPun, IPunObservable
         //player.life += m;
     }
 
+    public void Entry()
+    {
+        anim.SetBool("Entry", true);
+        Invoke("Reset", 0.2f);
+    }
     public void Attack() {
         anim.SetBool("Attack", true);
         Invoke("Reset", 0.2f);

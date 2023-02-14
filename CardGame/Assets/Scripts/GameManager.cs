@@ -71,6 +71,7 @@ namespace Com.MyCompany.MyGame
         [SerializeField] private Text vieJoueur2Vue2;
         [SerializeField] private GameObject panelJoueur1;
         [SerializeField] private GameObject panelJoueur2;
+        [SerializeField] private Vector3 arenaPos;
 
         //[0] = player 1, [1] = player2
         [SerializeField] private Image[] numplayers;
@@ -106,6 +107,12 @@ namespace Com.MyCompany.MyGame
             {
                 StartCoroutine(InstancePlayers());
             }
+        }
+
+        public void ArenaPosed()
+        {
+            arenaPos = GameObject.FindGameObjectWithTag("Arena").transform.position;
+            //pos.text = "X "+arenaPos.position.x + ",\n Y " + arenaPos.position.y +",\n Z "+ arenaPos.position.z;
         }
 
         void Update()
@@ -301,62 +308,73 @@ namespace Com.MyCompany.MyGame
                     }
                 case gameState.battlePhase:
                     {
-                        damageTurn = 0;
-                        healTurn = 0;
-                        battleText.SetActive(true);
-
-                        if (turn == 1)
+                        if (arenaPos != null) 
                         {
-                            ChangePhase();
-                        }
-                        if (cardOnFieldPTurn.Count > 0)
-                        {
-                            foreach (var c in _P1CardsOnField)
-                            {
-                                if (c.CompareTag("dps"))
-                                {
-                                    damageTurn += c.damage;
-                                    c.Attack();
-                                }
-                                else if (c.CompareTag("healer"))
-                                {
-                                    healTurn += c.damage;
-                                    c.Heal();
-                                    playerTurn.SetHealth(playerTurn.GetHealth() + healTurn);
-                                }
-                                else if (c.CompareTag("ekey"))
-                                {
-                                    foreach (var ca in cardOnFieldPTurn)
-                                    {
-                                        ca.life += c.damage;
-                                    }
-                                }
-                            }
-                            if (cardOnFieldOPTurn.Count > 0)
-                            {
-                                foreach (var c in cardOnFieldOPTurn)
-                                {
-                                    if (c.life < damageTurn)
-                                    {
-                                        damageTurn -= c.life;
-                                        CardNumber(false);
-                                        oldCardNumber = currentCardNumber;
-                                        c.Die();
-                                    }
-                                    else
-                                    {
-                                        c.life -= damageTurn;
-                                        c.GetDamage();
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                otherPlayer.SetHealth(otherPlayer.GetHealth() - damageTurn);
-                            }
+                            damageTurn = 0;
+                            healTurn = 0;
+                            battleText.SetActive(true);
 
-                            battleText.SetActive(false);
-                            ChangePhase();
+                            if (turn == 1)
+                            {
+                                //ChangePhase();
+                            }
+                            if (cardOnFieldPTurn.Count > 0)
+                            {
+                                foreach (var c in _P1CardsOnField)
+                                {
+                                    if (c.CompareTag("dps"))
+                                    {
+                                        //Debug.Log(c);
+                                        while (c.transform.position != arenaPos)
+                                        {
+
+                                            c.transform.position = Vector3.MoveTowards(c.transform.position, arenaPos, 0.1f);
+
+                                        }
+                                        c.Entry();
+                                        damageTurn += c.damage;
+                                        c.Attack();
+                                    }
+                                    else if (c.CompareTag("healer"))
+                                    {
+                                        healTurn += c.damage;
+                                        c.Heal();
+                                        playerTurn.SetHealth(playerTurn.GetHealth() + healTurn);
+                                    }
+                                    else if (c.CompareTag("ekey"))
+                                    {
+                                        foreach (var ca in cardOnFieldPTurn)
+                                        {
+                                            ca.life += c.damage;
+                                        }
+                                    }
+                                }
+                                if (cardOnFieldOPTurn.Count > 0)
+                                {
+                                    foreach (var c in cardOnFieldOPTurn)
+                                    {
+                                        if (c.life < damageTurn)
+                                        {
+                                            damageTurn -= c.life;
+                                            CardNumber(false);
+                                            oldCardNumber = currentCardNumber;
+                                            c.Die();
+                                        }
+                                        else
+                                        {
+                                            c.life -= damageTurn;
+                                            c.GetDamage();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    otherPlayer.SetHealth(otherPlayer.GetHealth() - damageTurn);
+                                }
+
+                                battleText.SetActive(false);
+                                ChangePhase();
+                            }
                         }
                         break;
                     }
@@ -378,6 +396,12 @@ namespace Com.MyCompany.MyGame
             }
         }
 
+
+        //IEnumerator GoToArenaAndAttack(Mobs c)
+        //{
+        //    Debug.Log("corout");
+            
+        //}
         public List<Mobs> SetCardsOnField(Mobs monster, List<Mobs> cardOnFieldCP)
         {
             if (cardOnFieldCP.Count < 3)
