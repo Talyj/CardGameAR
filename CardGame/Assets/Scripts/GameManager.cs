@@ -308,8 +308,8 @@ namespace Com.MyCompany.MyGame
                     }
                 case gameState.battlePhase:
                     {
-                        if (arenaPos != null) 
-                        {
+                        //if (arenaPos != null) 
+                        //{
                             damageTurn = 0;
                             healTurn = 0;
                             battleText.SetActive(true);
@@ -325,12 +325,7 @@ namespace Com.MyCompany.MyGame
                                     if (c.CompareTag("dps"))
                                     {
                                         //Debug.Log(c);
-                                        while (c.transform.position != arenaPos)
-                                        {
-
-                                            c.transform.position = Vector3.MoveTowards(c.transform.position, arenaPos, 0.1f);
-
-                                        }
+                                        //StartCoroutine(GoToArenaAndAttack(c));
                                         c.Entry();
                                         damageTurn += c.damage;
                                         c.Attack();
@@ -375,7 +370,7 @@ namespace Com.MyCompany.MyGame
                                 battleText.SetActive(false);
                                 ChangePhase();
                             }
-                        }
+                        //}
                         break;
                     }
             }
@@ -399,8 +394,17 @@ namespace Com.MyCompany.MyGame
 
         //IEnumerator GoToArenaAndAttack(Mobs c)
         //{
-        //    Debug.Log("corout");
-            
+        //    float step = 5 * Time.deltaTime;
+        //    while (c.transform.position != arenaPos)
+        //    {
+
+        //        c.transform.position = Vector3.MoveTowards(c.transform.position, arenaPos,step );
+        //        yield return new WaitForSeconds(1);
+        //    }
+        //    c.Entry();
+        //    damageTurn += c.damage;
+        //    c.Attack();
+
         //}
         public List<Mobs> SetCardsOnField(Mobs monster, List<Mobs> cardOnFieldCP)
         {
